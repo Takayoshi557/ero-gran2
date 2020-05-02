@@ -6,7 +6,7 @@ import os
 
 # 自分のBotのアクセストークンに置き換えてください
 #TOKEN = 'Njg5NzM2OTc5MDc1ODI1NzA2.XnLKlQ.VwxXI3msQeqyHc7cpQ9Q3igL8AQ'
-token = os.environ['DISCORD_BOT_TOKEN']
+token = os.environ[DISCORD_BOT_TOKEN]
 
 
 client = commands.Bot(command_prefix='.')
