@@ -28,5 +28,5 @@ schedule==0.6.0
 six==1.14.0
 soupsieve==2.0
 urllib3==1.25.8
-websockets==8.1
+websockets==8.0
 yarl==1.4.2
