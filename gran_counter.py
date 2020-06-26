@@ -6,9 +6,10 @@ from discord.ext import commands
 from datetime import datetime as dt
 from datetime import timedelta
 import csv
+import os
 
 # 自分のBotのアクセストークンに置き換えてください
-TOKEN = DISCORD_BOT_TOKEN
+TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
 description = '''An example bot to showcase the discord.ext.commands extension
 module.
