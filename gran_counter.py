@@ -8,7 +8,7 @@ from datetime import timedelta
 import csv
 
 # 自分のBotのアクセストークンに置き換えてください
-TOKEN = 'Njg5NzM2OTc5MDc1ODI1NzA2.Xq020A.J_TSxwiUPl8nWmTWdvYh6ui37j0'
+TOKEN = DISCORD_BOT_TOKEN
 
 description = '''An example bot to showcase the discord.ext.commands extension
 module.
