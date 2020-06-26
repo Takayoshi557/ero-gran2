@@ -1,75 +1,92 @@
+# インストールした discord.py を読み込む
+import asyncio
+import time
 import discord
 from discord.ext import commands
-import asyncio
-import os
-
+from datetime import datetime as dt
+from datetime import timedelta
+import csv
 
 # 自分のBotのアクセストークンに置き換えてください
-#TOKEN = 'Njg5NzM2OTc5MDc1ODI1NzA2.XnLKlQ.VwxXI3msQeqyHc7cpQ9Q3igL8AQ'
-token = os.environ['DISCORD_BOT_TOKEN']
+TOKEN = 'Njg5NzM2OTc5MDc1ODI1NzA2.Xq020A.J_TSxwiUPl8nWmTWdvYh6ui37j0'
+
+description = '''An example bot to showcase the discord.ext.commands extension
+module.
+There are a number of utility commands being showcased here.'''
+bot = commands.Bot(command_prefix='!', description=description)
 
 
-client = commands.Bot(command_prefix='.')
+
+# 接続に必要なオブジェクトを生成
+client = discord.Client()
+
+
+# 起動時に動作する処理
 @client.event
 async def on_ready():
-    print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
-    print('------')
-
-@client.command()
-async def get(ctx, about = "drop", pcs= "1"):
-    cnt, settime = int(100), float(86400)
-    reaction_member = [">>>"]
-    test = discord.Embed(title=f"boss: {about} == {pcs}pcs", colour=0x1e90ff)
-    test.add_field(name=f"投降後24時間で締め切り/The deadline is 24hrs after the surrender.\n", value=None, inline=True)
-    msg = await ctx.send(embed=test)
-    #投票の欄
-    await msg.add_reaction('⏫')
-    await msg.add_reaction('✖')
-
-    def check(reaction, user):
-        emoji = str(reaction.emoji)
-        if user.bot == True:    # botは無視
-            pass
-        else:
-            return emoji == '⏫' or emoji == '✖'
-
-    while len(reaction_member)-1 <= cnt:
-        try:
-            reaction, user = await client.wait_for('reaction_add', timeout=settime, check=check)
-        except asyncio.TimeoutError:
-            await ctx.send('締め切り！/CLOSED!')
-            break
-        else:
-            print(str(reaction.emoji))
-            if str(reaction.emoji) == '⏫':
-                reaction_member.append(user.name)
-                cnt -= 1
-                test = discord.Embed(title=f"boss: {about} == {pcs}pcs",colour=0x1e90ff)
-                test.add_field(name=f"投降後24時間で締め切り/The deadline is 24hrs after the surrender.\n", value='\n'.join(reaction_member), inline=True)
-                await msg.edit(embed=test)
-
-                if cnt == 0:
-                    test = discord.Embed(title=about,colour=0x1e90ff)
-                    test.add_field(name=f"投降後24時間で締め切り/The deadline is 24hrs after the surrender.\n", value='\n'.join(reaction_member), inline=True)
-                    await msg.edit(embed=test)
-                    finish = discord.Embed(title=f"boss: {about} == {pcs}pcs",colour=0x1e90ff)
-                    finish.add_field(name=f"投降後24時間で締め切り/The deadline is 24hrs after the surrender.",value='\n'.join(reaction_member), inline=True)
-                    await ctx.send(embed=finish)
-
-            elif str(reaction.emoji) == '✖':
-                if user.name in reaction_member:
-                    reaction_member.remove(user.name)
-                    cnt += 1
-                    test = discord.Embed(title=f"boss: {about} == {pcs}pcs",colour=0x1e90ff)
-                    test.add_field(name=f"投降後24時間で締め切り/The deadline is 24hrs after the surrender.\n", value='\n'.join(reaction_member), inline=True)
-                    await msg.edit(embed=test)
-                else:
-                    pass
-        # リアクション消す。メッセージ管理権限がないとForbidden:エラーが出ます。
-        await msg.remove_reaction(str(reaction.emoji), user)
+    # 起動したらターミナルにログイン通知が表示される
+    print('ログインしました')
 
 
+# お試しリマインダ
+# def isdecimal():
+#    pass
 
-client.run(token)
+
+@client.event
+async def on_raw_reaction_add(payload):
+#async def on_raw_reaction_add(reaction, user):
+    with open('gran_log.txt', 'a', newline='') as f:
+        channel = client.get_channel(722253361159864479)
+        now = dt.now()
+        now1 = str(now)
+#        writer = csv.writer(f)
+#        reac_m = str(reaction.message)
+        f.write("Date&Time:\r\n"+now1+"\r\n")
+#        f.write("reaction has been added"+"\r\n")
+#        reac_reac = reaction
+#       f.write(str(reac_reac))
+        f.write("message channel & id\r\n")
+#    print(reaction.message)
+        f.write(str(payload.channel_id)+"\r\n")
+#        f.write(str(reaction.message.channel.id)+"\r\n")
+#        f.write(reac_m+"\r\n")
+#    print("message-author")
+#    print(reaction.message.author.id)
+        f.write("reaction-user-id\r\n")
+        f.write(str(payload.user_id)+"\r\n\r\n")
+#    await message.channel.send('reac_m')
+    #    await reaction.channel.send(reaction.message)
+        await channel.send('Date&Time:\n'+now1+'\nmessage channel & id\n'+str(payload.channel_id)+'\nreaction-user-id\r\n'+str(payload.user_id)+'\n_')
+
+ #       lot_result_channel = [channel for channel in client.get_all_channels() if channel.id == lot_result_channel_id][0]
+#        await client.send_message(lot_result_channel, 'good!')
+
+
+@client.event
+async def on_raw_reaction_remove(payload):
+#async def on_raw_reaction_add(reaction, user):
+    with open('gran_log.txt', 'a', newline='') as f:
+        channel = client.get_channel(722253361159864479)
+        now2 = dt.now()
+        now3 = str(now2)
+#        writer = csv.writer(f)
+#        reac_m = str(reaction.message)
+        f.write("Date&Time:\r\n"+now3+"\r\n")
+#        f.write("reaction has been added"+"\r\n")
+#        reac_reac = reaction
+#       f.write(str(reac_reac))
+        f.write("message channel & id\r\n")
+#    print(reaction.message)
+#        f.write(str(reaction.message.channel)+"\r\n")
+        f.write(str(payload.channel_id)+"\r\n")
+#        f.write(reac_m+"\r\n")
+#    print("message-author")
+#    print(reaction.message.author.id)
+        f.write("delete-reaction-user-id\r\n")
+        f.write(str(payload.user_id) + "del\r\n\r\n")
+
+
+        await channel.send('Date&Time:\n' + now3 + '\nmessage channel & id\n' + str(payload.channel_id) + '\nreaction-user-id\r\n' + str(payload.user_id) + 'del\n_')
+        
+client.run(TOKEN)
