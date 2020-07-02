@@ -145,9 +145,23 @@ async def on_message(message):
 async def on_message(message):
     wai_channel = client.get_channel(658468918243098626)  #本番用
 #    wai_channel = client.get_channel(722253530576060497)   #debag用
+    if message.author == client.user:
+        return
 
-    if message.content.startswith('ワイが'):
-        await wai_channel.send('さるじや')
+    if message.content.startswith('$ワイが'):
+        if message.author.id == 591281241798737938:
+            await wai_channel.send('アンタ誰や')
+        else:
+            await wai_channel.send(message.author.name + 'や。さるじやあらへん。')
+
+    if message.content.endswith('さるじや！'):
+        if message.content.startswith('$ワイが'):
+            if message.author.id == 591281241798737938:
+                await wai_channel.send('パカラッパカラッ！\nヒヒーン(*´ω｀*)')
+            else:
+                await wai_channel.send('さるじのケツでも蹴っとき！')
+        else:
+            await wai_channel.send('さるじのケツでも蹴っとき！')
 
 
 client.run(TOKEN)
