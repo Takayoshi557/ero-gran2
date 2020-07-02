@@ -141,4 +141,13 @@ async def on_message(message):
                 else:
                     await culc_channel.send('えろてろまで問い合わせを。')
 
+@client.event
+async def on_message(message):
+    wai_channel = client.get_channel(658468918243098626)  #本番用
+#    wai_channel = client.get_channel(722253530576060497)   #debag用
+
+    if message.content.startswith('ワイが'):
+        await wai_channel.send('さるじや')
+
+
 client.run(TOKEN)
