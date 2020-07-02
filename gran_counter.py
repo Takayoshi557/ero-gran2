@@ -148,14 +148,14 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith('$ワイが'):
+    if message.content.startswith('ワイが'):
         if message.author.id == 591281241798737938:
             await wai_channel.send('アンタ誰や')
         else:
             await wai_channel.send(message.author.name + 'や。さるじやあらへん。')
 
     if message.content.endswith('さるじや！'):
-        if message.content.startswith('$ワイが'):
+        if message.content.startswith('ワイが'):
             if message.author.id == 591281241798737938:
                 await wai_channel.send('パカラッパカラッ！\nヒヒーン(*´ω｀*)')
             else:
