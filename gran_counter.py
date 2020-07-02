@@ -7,6 +7,7 @@ from datetime import datetime as dt
 from datetime import timedelta
 import csv
 import os
+import math
 
 # 自分のBotのアクセストークンに置き換えてください
 TOKEN = os.environ['DISCORD_BOT_TOKEN']
