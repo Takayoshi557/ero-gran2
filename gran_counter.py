@@ -95,6 +95,12 @@ async def on_raw_reaction_remove(payload):
 async def on_message(message):
     culc_channel = client.get_channel(679730751360466963)  #本番用
 #    culc_channel = client.get_channel(722253530576060497)   #debag用
+    wai_channel = client.get_channel(658468918243098626)  #本番用
+#    wai_channel = client.get_channel(722253530576060497)   #debag用
+
+                    # we do not want the bot to reply to itself
+    if message.author == client.user:
+        return
 
     if message.content.startswith('!bun '):
         m_num = message.content.strip('!bun ')
@@ -140,5 +146,23 @@ async def on_message(message):
                         await culc_channel.send('25人以上で分配が100dia/人 以上なので以下に従って盟主と取引して下さい。\n今回は盟主が分配するため、血盟資金 + 各血盟の対象人数 × ' + str(math.floor(bunpd)) + 'diaを各盟主に渡してください。\n分配者手数料はありません。')
                 else:
                     await culc_channel.send('えろてろまで問い合わせを。')
+                    
+
+
+    if message.content.startswith('ワイが'):
+        if message.author.id == 591281241798737938:
+            await wai_channel.send('アンタ誰や')
+        else:
+            await wai_channel.send(message.author.name + 'や。さるじやあらへん。')
+
+    if message.content.endswith('さるじや'):
+        if message.content.startswith('ワイが'):
+            if message.author.id == 591281241798737938:
+                await wai_channel.send('パカラッパカラッ！\nヒヒーン(*´ω｀*)')
+            else:
+                await wai_channel.send('さるじのケツでも蹴っとき！')
+        else:
+            await wai_channel.send('さるじなら100dia罰金な')
+
 
 client.run(TOKEN)
