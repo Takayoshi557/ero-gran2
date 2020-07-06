@@ -174,6 +174,11 @@ async def on_message(message):
                 await wai_channel.send('さるじのケツでも蹴っとき！')
         else:
             await wai_channel.send('さるじなら100dia罰金な')
-
+    
+    if message.content.startswith('$残高照会'):
+        if message.author.id == 591281241798737938:
+            await wai_channel.send('はよ６万払お＾＾')
+        else:
+            await wai_channel.send('さるじさん６万')
 
 client.run(TOKEN)
