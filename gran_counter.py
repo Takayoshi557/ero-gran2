@@ -8,6 +8,8 @@ from datetime import timedelta
 import csv
 import os
 import math
+import random
+
 
 # 自分のBotのアクセストークンに置き換えてください
 TOKEN = os.environ['DISCORD_BOT_TOKEN']
@@ -111,8 +113,12 @@ async def on_message(message):
 
         if pp < 10 and dia < 5000:
             bunpa = dia / pp
-            await culc_channel.send('10人未満,5000dia未満なので以下となります。\n分配：' + str(math.floor(bunpa)) + 'dia\n血盟資金、分配者手数料はありません。')
-
+            if bunpa < 50:
+                dice = random.randint(1, pp)  #サイコロを振る。出る目を指定。
+                await culc_channel.send('分配が50dia未満(' + str(math.floor(bunpa)) + 'dia/人)なので、抽選を行います。\nリアクション表示の上から ' + str(dice) + ' 番目の方に ' + str(dia) + ' diaを渡してください。\nリアクション表示と人数が異なる場合は別途抽選を行ってください。')
+            else:
+                await culc_channel.send('10人未満,5000dia未満なので以下となります。\n分配：' + str(math.floor(bunpa)) + 'dia\n血盟資金、分配者手数料はありません。')
+                
         elif pp < 10 and dia >= 5000:
             ketsu = dia * 0.03
             bunpb = (dia - ketsu * 3) / pp
@@ -127,7 +133,12 @@ async def on_message(message):
             elif 10 <= pp < 25 and dia < 5000:
                 tema = dia * 0.05
                 bunpb = (dia - tema) / pp
-                await culc_channel.send('10人以上, 5000dia未満なので以下となります。\n分配：' + str(math.floor(bunpb)) + 'diaになります。\n分配者手数料は'+ str(math.floor(tema))+ 'diaです。\n血盟資金はありません。')
+                if bunpb < 50:
+                    dice = random.randint(1, pp)  # サイコロを振る。出る目を指定。
+                    await culc_channel.send('分配が50dia未満(' + str(math.floor(bunpb)) + 'dia/人)なので、抽選を行います。\nリアクション表示の上から ' + str(dice) + ' 番目の方に' + str(dia) + 'diaを渡してください。\nリアクション表示と人数が異なる場合は別途抽選を行ってください。')
+                else:
+                    await culc_channel.send('10人以上, 5000dia未満なので以下となります。\n分配：' + str(math.floor(bunpb)) + 'diaになります。\n分配者手数料は'+ str(math.floor(tema))+ 'diaです。\n血盟資金はありません。')
+                
             else:
                 if pp >= 25 and dia >= 5000:
                     ketsushi = dia * 0.03
