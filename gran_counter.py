@@ -180,5 +180,46 @@ async def on_message(message):
             await wai_channel.send('はよ６万払お＾＾')
         else:
             await wai_channel.send('さるじさん６万')
+            
+    global result, judge
+    if message.content == '！じゃんけん':
+        if message.author.id == 591281241798737938:
+            await message.channel.send('遊んどらんで６万貯めや')
+        else:
+            await message.channel.send("最初はぐー、じゃんけん")
 
+            jkbot = random.choice(("ぐー", "ちょき", "ぱー"))
+            draw = str(jkbot) + "！引き分けだよ～"
+            wn = str(jkbot) + "･･･君の勝ち！"
+            lst = random.choice((str(jkbot) + 'だよ！私の勝ち！弱ｗｗｗｗｗｗｗｗｗｗｗｗやめたら？じゃんけん',
+                              str(jkbot) + 'だから私の勝ちだね(∩´∀｀)∩、また挑戦してね！'))
+
+        def jankencheck(m):
+            return (m.author == message.author) and (m.content in ['ぐー', 'ちょき', 'ぱー'])
+
+        reply = await client.wait_for("message", check=jankencheck)
+        if reply.content == jkbot:
+            judge = draw
+        else:
+            if reply.content == "ぐー":
+                if jkbot == "ちょき":
+                    judge = wn
+                else:
+                    judge = lst
+
+            elif reply.content == "ちょき":
+                if jkbot == "ぱー":
+                    judge = wn
+                else:
+                    judge = lst
+
+            else:
+                if jkbot == "ぐー":
+                    judge = wn
+                else:
+                    judge = lst
+
+        await message.channel.send(judge)
+            
+            
 client.run(TOKEN)
