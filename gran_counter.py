@@ -184,7 +184,10 @@ async def on_message(message):
     global result, judge
     if message.content == '！じゃんけん':
         if message.author.id == 591281241798737938:
-            await message.channel.send('遊んどらんで６万貯めや')
+            saruji = random.choice(('？', '遊んどらんで金返せや', '最初はパー！私の勝ち！100dia払って＾＾'))
+            await wai_channel.send(str(saruji))
+            return
+
         else:
             await message.channel.send("最初はぐー、じゃんけん")
 
