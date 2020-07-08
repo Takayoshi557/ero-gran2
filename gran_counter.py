@@ -128,8 +128,16 @@ async def on_message(message):
             if 10 <= pp < 25 and dia >= 5000:
                 ketsu = dia * 0.03
                 tema = dia * 0.05
-                bunpb = (dia - ketsu * 3 - tema) / pp
-                await culc_channel.send('10人以上, 5000dia以上なので以下となります。\n血盟資金:' + str(math.floor(ketsu)) +'diaを各盟主へ渡してください。\n分配：' +str(math.floor(bunpb)) + 'diaになります。\nちなみに手間賃は'+ str(math.floor(tema))+ 'diaです。')
+                if tema < 500:
+                    bunpb = (dia - ketsu * 3 - tema) / pp
+                    await culc_channel.send('10人以上, 5000dia以上なので以下となります。\n血盟資金:' + str(math.floor(ketsu)) +'diaを各盟主へ渡してください。\n分配：' +str(math.floor(bunpb)) + 'diaになります。\nちなみに手間賃は'+ str(math.floor(tema))+ 'diaです。')
+                elif tema >= 500:
+                    tema = 500
+                    bunpb = (dia - ketsu * 3 - tema) / pp
+                    await culc_channel.send('10人以上, 5000dia以上なので以下となります。\n血盟資金:' + str(math.floor(ketsu)) + 'diaを各盟主へ渡してください。\n分配：' + str(math.floor(bunpb)) + 'diaになります。\nちなみに手間賃は上限の' + str(math.floor(tema)) + 'diaです。')
+                else:
+                    await culc_channel.send('えろてろまで問い合わせを。')
+               
             elif 10 <= pp < 25 and dia < 5000:
                 tema = dia * 0.05
                 bunpb = (dia - tema) / pp
