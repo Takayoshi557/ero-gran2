@@ -9,13 +9,13 @@ import csv
 import os
 import math
 import random
-import gspread
-import json
+#import gspread
+#import json
 
 
 # 自分のBotのアクセストークンに置き換えてください
 TOKEN = os.environ['DISCORD_BOT_TOKEN']
-SPREADSHEET_KEY =os.environ['GSS_CAMA']
+#SPREADSHEET_KEY =os.environ['GSS_CAMA']
 
 description = '''An example bot to showcase the discord.ext.commands extension
 module.
@@ -36,17 +36,17 @@ async def on_ready():
     
     
 #ServiceAccountCredentials：Googleの各サービスへアクセスできるservice変数を生成します。
-from oauth2client.service_account import ServiceAccountCredentials
+#from oauth2client.service_account import ServiceAccountCredentials
 
 #2つのAPIを記述しないとリフレッシュトークンを3600秒毎に発行し続けなければならない
-scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+#scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
 #認証情報設定
 #ダウンロードしたjsonファイル名をクレデンシャル変数に設定（秘密鍵、Pythonファイルから読み込みしやすい位置に置く）
-credentials = ServiceAccountCredentials.from_json_keyfile_name('camarade-283506-eb11794a69a1.json', scope)
+#credentials = ServiceAccountCredentials.from_json_keyfile_name('camarade-283506-eb11794a69a1.json', scope)
 
 #OAuth2の資格情報を使用してGoogle APIにログインします。
-gc = gspread.authorize(credentials)
+#gc = gspread.authorize(credentials)
 
 
 @client.event
@@ -189,9 +189,9 @@ async def on_message(message):
             await wai_channel.send('アンタ誰や')
         else:
             await wai_channel.send(message.author.name + 'や。さるじやあらへん。')
-            worksheet = gc.open_by_key(SPREADSHEET_KEY).sheet1
-            import_value = str(message.author.name + 'や。さるじやあらへん')
-            worksheet.update_cell(1, 2, import_value)
+#            worksheet = gc.open_by_key(SPREADSHEET_KEY).sheet1
+#            import_value = str(message.author.name + 'や。さるじやあらへん')
+#            worksheet.update_cell(1, 2, import_value)
 
     if message.content.endswith('さるじや'):
         if message.content.startswith('ワイが'):
