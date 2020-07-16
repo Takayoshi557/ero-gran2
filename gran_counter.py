@@ -32,7 +32,7 @@ client = discord.Client()
 @client.event
 async def on_ready():
     # 起動したらターミナルにログイン通知が表示される
-#    print('ログインしました')
+    print('ログインしました')
     
     
 #ServiceAccountCredentials：Googleの各サービスへアクセスできるservice変数を生成します。
