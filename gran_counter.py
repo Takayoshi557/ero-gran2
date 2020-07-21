@@ -186,9 +186,9 @@ async def on_message(message):
 
     if message.content.startswith('ワイが'):
         if message.author.id == 591281241798737938:
-            await wai_channel.send('アンタ誰や')
+            await wai_channel.send('アンタ誰や？下の板言うてないで狩りしーや？')
         else:
-            await wai_channel.send(message.author.name + 'や。さるじやあらへん。')
+            await wai_channel.send(message.author.name + 'や。さるじやあらへん。\nあいつは今びっくり焼きを調べるのに夢中やで！')
 #            worksheet = gc.open_by_key(SPREADSHEET_KEY).sheet1
 #            import_value = str(message.author.name + 'や。さるじやあらへん')
 #            worksheet.update_cell(1, 2, import_value)
