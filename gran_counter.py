@@ -115,6 +115,7 @@ async def on_message(message):
 #    culc_channel = client.get_channel(722253530576060497)   #debag用
     wai_channel = client.get_channel(658468918243098626)  #本番用
 #    wai_channel = client.get_channel(722253530576060497)   #debag用
+    ami_channel = client.get_channel(675359824803790850)
 
                     # we do not want the bot to reply to itself
     if message.author == client.user:
@@ -181,8 +182,29 @@ async def on_message(message):
                         await culc_channel.send('25人以上で分配が100dia/人 以上なので以下に従って盟主と取引して下さい。\n今回は盟主が分配するため、血盟資金 + 各血盟の対象人数 × ' + str(math.floor(bunpd)) + 'diaを各盟主に渡してください。\n分配者手数料はありません。')
                 else:
                     await culc_channel.send('えろてろまで問い合わせを。')
-                    
+                             
+    if message.content.startswith('!dice '):
+        if message.channel.id == 675359824803790850:
+        #if message.channel.id == 722253530576060497:
+            rami_num = message.content.strip('!rami ')
+            rami_list = rami_num.split()
+            # 人数ppとdiaに分ける。
+            rami_rand = int(rami_list[0])
+            rami_dice = random.randint(1, rami_rand)  # サイコロを振る。出る目を指定。
+            await ami_channel.send('抽選した結果、' + str(rami_dice) + ' 番が当選！オーメデトーゴーザイマース！')
+            return
+        return
 
+    if message.content.startswith('!nami '):
+        if message.channel.id == 675359824803790850:
+            nami_num = message.content.strip('!nami')
+            nami_list = nami_num.split()
+            nami_rand = random.choice(nami_list)
+            await ami_channel.send('抽選した結果、' + str(nami_rand) + ' が当選！オーメデトーゴーザイマース！')
+            return
+        return
+
+    
 
     if message.content.startswith('ワイが'):
         if message.author.id == 591281241798737938:
