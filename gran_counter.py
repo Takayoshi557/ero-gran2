@@ -186,7 +186,7 @@ async def on_message(message):
     if message.content.startswith('!dice '):
         if message.channel.id == 675359824803790850:
         #if message.channel.id == 722253530576060497:
-            rami_num = message.content.strip('!rami ')
+            rami_num = message.content.strip('!dice ')
             rami_list = rami_num.split()
             # 人数ppとdiaに分ける。
             rami_rand = int(rami_list[0])
