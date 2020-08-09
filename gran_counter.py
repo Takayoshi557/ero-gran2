@@ -215,9 +215,9 @@ async def on_message(message):
             await wai_channel.send('アンタ誰や？下の板言うてないで狩りしーや？')
         else:
             await wai_channel.send(message.author.name + 'や。さるじやあらへん。\nあいつは今びっくり焼きを調べるのに夢中やで！')
-#            worksheet = gc.open_by_key(SPREADSHEET_KEY).sheet1
-#            import_value = str(message.author.name + 'や。さるじやあらへん')
-#            worksheet.update_cell(1, 2, import_value)
+            worksheet = gc.open_by_key(SPREADSHEET_KEY).sheet1
+            import_value = str(message.author.name + 'や。さるじやあらへん')
+            worksheet.update_cell(1, 2, import_value)
 
 #    if message.content.startswith('$ワイが')
 #            worksheet = gc.open_by_key(SPREADSHEET_KEY).sheet1
