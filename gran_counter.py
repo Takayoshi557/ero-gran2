@@ -10,7 +10,7 @@ import os
 import math
 import random
 import gspread
-import json
+#import json
 
 
 # 自分のBotのアクセストークンに置き換えてください
