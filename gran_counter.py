@@ -9,8 +9,8 @@ import csv
 import os
 import math
 import random
-#import gspread
-#import json
+import gspread
+import json
 
 
 # 自分のBotのアクセストークンに置き換えてください
