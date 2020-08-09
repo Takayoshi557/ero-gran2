@@ -49,7 +49,7 @@ credentials = ServiceAccountCredentials.from_json_keyfile_name('camarade-secret_
 gc = gspread.authorize(credentials)
 
 #共有設定したスプレッドシートキーを変数[SPREADSHEET_KEY]に格納する。
-SPREADSHEET_KEY = '1HsQ_p2Hsg2g4tb8bXClOqseIhCYoI-4-FaWNrlktdnE'
+#SPREADSHEET_KEY = '1HsQ_p2Hsg2g4tb8bXClOqseIhCYoI-4-FaWNrlktdnE'
 
 
 
