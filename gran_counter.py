@@ -69,7 +69,6 @@ async def on_raw_reaction_add(payload):
         return
     else:
         worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
-        worksheet_id = gc.open_by_key(SPREADSHEET_KEY).worksheet('ID_LIST')
         search_mid = payload.message_id
         mid_cell = worksheet_find.find(str(search_mid))
         entry_num = worksheet_find.cell(mid_cell.row, 165).value
@@ -232,7 +231,7 @@ async def on_message(message):
             worksheet_list.update_cell(input_id, 7, str(message.id))
             worksheet_list.update_cell(input_id, 9, str('-'))
             worksheet_list.update_cell(input_id, 10, str('-'))
-            await regi_channel.send('ID:' + str(id_no) + 'で登録しました。')
+            await regi_channel.send('ID: r' + str(id_no) + ' で登録しました。')
 
 
     if message.content.startswith('!droplist_r'):
