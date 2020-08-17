@@ -63,28 +63,7 @@ async def on_raw_reaction_add(payload):
         channel = client.get_channel(722253361159864479)
         now = dt.now()
         now1 = str(now)
-#        writer = csv.writer(f)
-#        reac_m = str(reaction.message)
-#        f.write("Date&Time:\r\n"+now1+"\r\n")
-#        f.write("reaction has been added"+"\r\n")
-#        reac_reac = reaction
-#       f.write(str(reac_reac))
-#        f.write("message channel & id\r\n")
-#    print(reaction.message)
-#        f.write(str(payload.channel_id)+"\r\n")
-#        f.write(str(reaction.message.channel.id)+"\r\n")
-#        f.write(reac_m+"\r\n")
-#    print("message-author")
-#    print(reaction.message.author.id)
-#        f.write("reaction-user-id\r\n")
-#        f.write(str(payload.user_id)+"\r\n\r\n")
-#    await message.channel.send('reac_m')
-    #    await reaction.channel.send(reaction.message)
         await channel.send('Date&Time:\n'+now1+'\nmessage channel\n'+str(payload.channel_id)+'\nmessage-id\n'+str(payload.message_id)+'\nreaction-user-id\r\n'+str(payload.user_id)+'\n_')
-
- #       lot_result_channel = [channel for channel in client.get_all_channels() if channel.id == lot_result_channel_id][0]
-#        await client.send_message(lot_result_channel, 'good!')
-
 
 @client.event
 async def on_raw_reaction_remove(payload):
@@ -96,32 +75,15 @@ async def on_raw_reaction_remove(payload):
             channel = client.get_channel(722253361159864479)
             now2 = dt.now()
             now3 = str(now2)
-#        writer = csv.writer(f)
-#        reac_m = str(reaction.message)
-#        f.write("Date&Time:\r\n"+now3+"\r\n")
-#        f.write("reaction has been added"+"\r\n")
-#        reac_reac = reaction
-#       f.write(str(reac_reac))
-#        f.write("message channel & id\r\n")
-#    print(reaction.message)
-#        f.write(str(reaction.message.channel)+"\r\n")
-#        f.write(str(payload.channel_id)+"\r\n")
-#        f.write(reac_m+"\r\n")
-#    print("message-author")
-#    print(reaction.message.author.id)
-#        f.write("delete-reaction-user-id\r\n")
-#        f.write(str(payload.user_id) + "del\r\n\r\n")
         await channel.send('Date&Time:\n' + now3 + '\nmessage channel\n' + str(payload.channel_id) + '\nmessage-id\n'+str(payload.message_id) + '\nreaction-user-id\r\n' + str(payload.user_id) + 'del\n_')
         
 @client.event
 async def on_message(message):
-    culc_channel = client.get_channel(679730751360466963)  #本番用
-#    culc_channel = client.get_channel(722253530576060497)   #debag用
+    culc_channel = client.get_channel(740355050182017135)  #本番用
     wai_channel = client.get_channel(658468918243098626)  #本番用
-#    wai_channel = client.get_channel(722253530576060497)   #debag用
     ami_channel = client.get_channel(675359824803790850)
+    list_channel = client.get_channel(743314066713477251)
 
-                    # we do not want the bot to reply to itself
     if message.author == client.user:
         return
 
@@ -189,7 +151,6 @@ async def on_message(message):
                              
     if message.content.startswith('!dice '):
         if message.channel.id == 675359824803790850:
-        #if message.channel.id == 722253530576060497:
             rami_num = message.content.strip('!dice ')
             rami_list = rami_num.split()
             # 人数ppとdiaに分ける。
@@ -219,13 +180,6 @@ async def on_message(message):
             import_value = str(message.author.name + 'や。さるじやあらへん')
             worksheet.update_cell(1, 2, import_value)
 
-#    if message.content.startswith('$ワイが')
-#            worksheet = gc.open_by_key(SPREADSHEET_KEY).sheet1
-#            import_value = str(message.author.name + 'や。さるじやあらへん')
-#            worksheet.update_cell(1, 2, import_value)
-
-        
-
     if message.content.endswith('さるじや'):
         if message.content.startswith('ワイが'):
             if message.author.id == 591281241798737938:
@@ -240,6 +194,159 @@ async def on_message(message):
             await wai_channel.send('どうせまた借金するんやろ？')
         else:
             await wai_channel.send('さるじさん６万')
+            
+#**********************************#
+# アイテム管理用リアクション追加
+#**********************************#
+
+    #boss drop management bot. (!get(n or r) BossName DropItem)### n = normal, r = rare
+    if message.content.startswith('!getr '):
+        if message.channel.id == 744727455293767711:
+            drop_high_list = message.content.split()
+            drop_high_boss = drop_high_list[1]
+            drop_high_item = drop_high_list[2]
+            today = dt.now()
+            worksheet_list = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
+            worksheet_id = gc.open_by_key(SPREADSHEET_KEY).worksheet('ID_LIST')
+            id_num = worksheet_id.cell(4, 8).value
+            input_id = int(id_num) + 2
+            id_no = int(id_num) + 1
+            worksheet_list.update_cell(input_id, 1, 'r' + str(id_no))
+            worksheet_list.update_cell(input_id, 2, str(drop_high_boss))
+            worksheet_list.update_cell(input_id, 3, str(drop_high_item))
+            worksheet_list.update_cell(input_id, 4, str(message.author.name))
+            worksheet_list.update_cell(input_id, 5, str(today.year) + '/' + str(today.month) + '/' + str(today.day))
+            worksheet_list.update_cell(input_id, 6, str('none'))
+            worksheet_list.update_cell(input_id, 7, str(message.id))
+            worksheet_list.update_cell(input_id, 9, str('-'))
+            worksheet_list.update_cell(input_id, 10, str('-'))
+
+
+    if message.content.startswith('!droplist_r'):
+        if message.channel.id == 744727455293767711:
+            worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
+            worksheet_id = gc.open_by_key(SPREADSHEET_KEY).worksheet('ID_LIST')
+            cell_list = worksheet_find.findall('none')
+            deal_count = worksheet_id.cell(5, 8).value
+            r_list = list()
+            for num in range(int(deal_count)):
+                get_id = worksheet_find.cell(cell_list[num].row, 1).value
+                get_boss = worksheet_find.cell(cell_list[num].row, 2).value
+                get_item = worksheet_find.cell(cell_list[num].row, 3).value
+                get_name = worksheet_find.cell(cell_list[num].row, 4).value
+                get_date = worksheet_find.cell(cell_list[num].row, 5).value
+                r_list.append(get_id+'\t: '+ get_boss+'\t/ '+ get_item+'\t/ '+get_name+'\t/ '+get_date)
+            r_list = '\n'.join(r_list)
+            get_r = discord.Embed(title='DROP ITEM LIST (GRADE: RARE)', description='ID \t:\t  boss \t/  item \t/  holder \t/  date', color=discord.Colour.red())
+            get_r.add_field(name='---------------------------------------------', value=str(r_list), inline=True)
+            await list_channel.send(embed=get_r)
+
+            return
+
+    if message.content.startswith('!bunr '):
+        if not message.channel.id == 740355050182017135:
+            return
+        worksheet_list = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
+        rbun_list = message.content.split()
+        rbun_id = rbun_list[1]
+        rbun_dia = rbun_list[2]
+        rbun_buyer = rbun_list[3]
+        id_cell = worksheet_list.find(str(rbun_id))
+        if str(worksheet_list.cell(id_cell.row, 6).value) == str('finish'):
+            await culc_channel.send('このID案件は分配案内が完了しています。\n変更したい方は えろてろ までご連絡おねがいします。')
+            return
+        else:
+            worksheet_list.update_cell(id_cell.row, 6, str('finish'))   # 分配実行フラグ変更
+            worksheet_list.update_cell(id_cell.row, 9, str(rbun_dia))   # 分配ダイア入力
+            worksheet_list.update_cell(id_cell.row, 10, str(rbun_buyer))   # 購入者入力
+
+            pp = int(worksheet_list.cell(id_cell.row, 8).value)
+            dia = int(rbun_dia)
+
+            if pp < 10 and dia < 5000:
+                bunpa = dia / pp
+                if bunpa < 50:
+                    dice = random.randint(1, pp)  # サイコロを振る。出る目を指定。
+                    await culc_channel.send(
+                        '分配が50dia未満(' + str(math.floor(bunpa)) + 'dia/人)なので、抽選を行います。\nリアクション表示の上から ' + str(
+                            dice) + ' 番目の方に ' + str(dia) + ' diaを渡してください。\nリアクション表示と人数が異なる場合は別途抽選を行ってください。')
+                    return
+                else:
+                    await culc_channel.send(
+                        '10人未満,5000dia未満なので以下となります。\n分配：' + str(math.floor(bunpa)) + 'dia\n血盟資金、分配者手数料はありません。')
+                    return
+            elif pp < 10 and dia >= 5000:
+                ketsu = dia * 0.03
+                bunpb = (dia - ketsu * 3) / pp
+                await culc_channel.send(str(rbun_id) + 'の' + str(worksheet_list.cell(id_cell.row, 2).value) + '/' + str(worksheet_list.cell(id_cell.row, 3).value) +' が' + str(dia) + ' diaで売れました。\nメンションされている方々は以下に従い' + str(worksheet_list.cell(id_cell.row, 4).value) +'と取引を行って下さい。\n各盟主は血盟資金として ' + str(math.floor(ketsu)) + 'diaを出品してください。\nメンションされている方々は ' + str(
+                        math.floor(bunpb)) + 'diaで出品して下さい。\n分配者手数料は１０人未満なのでありません。')
+                for num in range(pp):
+                    id_col = int(num) + int(11)
+                    ment_id = '<@' + str(worksheet_list.cell(id_cell.row, id_col).value) + '>'
+                    await culc_channel.send(' %s ' % ment_id)
+                return
+            else:
+                if 10 <= pp < 25 and dia >= 5000:
+                    ketsu = dia * 0.03
+                    tema = dia * 0.05
+                    if tema < 500:
+                        bunpb = (dia - ketsu * 3 - tema) / pp
+                        await culc_channel.send('10人以上, 5000dia以上なので以下となります。\n血盟資金:' + str(
+                            math.floor(ketsu)) + 'diaを各盟主へ渡してください。\n分配：' + str(
+                            math.floor(bunpb)) + 'diaになります。\nちなみに手間賃は' + str(math.floor(tema)) + 'diaです。')
+                    elif tema >= 500:
+                        tema = 500
+                        bunpb = (dia - ketsu * 3 - tema) / pp
+                        await culc_channel.send('10人以上, 5000dia以上なので以下となります。\n血盟資金:' + str(
+                            math.floor(ketsu)) + 'diaを各盟主へ渡してください。\n分配：' + str(
+                            math.floor(bunpb)) + 'diaになります。\nちなみに手間賃は上限の' + str(math.floor(tema)) + 'diaです。')
+                    else:
+                        await culc_channel.send('えろてろまで問い合わせを。')
+
+                    return
+                elif 10 <= pp < 25 and dia < 5000:
+                    tema = dia * 0.05
+                    bunpb = (dia - tema) / pp
+                    if bunpb < 50:
+                        dice = random.randint(1, pp)  # サイコロを振る。出る目を指定。
+                        await culc_channel.send(
+                            '分配が50dia未満(' + str(math.floor(bunpb)) + 'dia/人)なので、抽選を行います。\nリアクション表示の上から ' + str(
+                                dice) + ' 番目の方に' + str(dia) + 'diaを渡してください。\nリアクション表示と人数が異なる場合は別途抽選を行ってください。')
+                        return
+                    else:
+                        await culc_channel.send(
+                            '10人以上, 5000dia未満なので以下となります。\n分配：' + str(math.floor(bunpb)) + 'diaになります。\n分配者手数料は' + str(
+                                math.floor(tema)) + 'diaです。\n血盟資金はありません。')
+                        return
+                else:
+                    if pp >= 25 and dia >= 5000:
+                        ketsushi = dia * 0.03
+                        bunpc = (dia - ketsushi * 3) / pp
+                        if bunpc < 100:
+                            meishubun1 = dia / 3
+                            await culc_channel.send('25人以上 / 分配 100dia未満なので全額血盟資金となります。\n３等分した' + str(
+                                math.floor(meishubun1)) + 'diaを各盟主に渡してください。\n分配者手数料、血盟資金はありません。')
+                            return
+                        else:
+                            await culc_channel.send('25人以上 / 分配 100dia以上なので盟主が分配します。以下に従って盟主と取引して下さい。\n' + str(
+                                math.floor(bunpc)) + ' × 各血盟の対象人数 + ' + str(
+                                math.floor(ketsushi)) + 'dia(血盟資金）の合計を各盟主に渡してください。\n分配者手数料はありません。')
+                            return
+                    elif pp >= 25 and dia < 5000:
+                        bunpd = dia / pp
+                        if bunpd < 100:
+                            meishubun2 = dia / 3
+                            await culc_channel.send('25人以上で分配が100dia/人 未満なので全額血盟資金となります。\n' + str(
+                                math.floor(meishubun2)) + 'diaを各盟主に渡してください。\n分配者手数料、血盟資金はありません。')
+                        else:
+                            await culc_channel.send(
+                                '25人以上で分配が100dia/人 以上なので以下に従って盟主と取引して下さい。\n今回は盟主が分配するため、血盟資金 + 各血盟の対象人数 × ' + str(
+                                    math.floor(bunpd)) + 'diaを各盟主に渡してください。\n分配者手数料はありません。')
+                    else:
+                        await culc_channel.send('えろてろまで問い合わせを。')
+
+#*****************以下はじゃんけんBOT*******************
+
             
     global result, judge
     if message.content == '！じゃんけん':
