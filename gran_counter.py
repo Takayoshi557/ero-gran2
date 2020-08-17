@@ -236,7 +236,7 @@ async def on_message(message):
 
 
     if message.content.startswith('!droplist_r'):
-        if message.channel.id == 744727455293767711:
+        if message.channel.id == 743314066713477251:
             worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
             worksheet_id = gc.open_by_key(SPREADSHEET_KEY).worksheet('ID_LIST')
             cell_list = worksheet_find.findall('none')
