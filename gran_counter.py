@@ -64,7 +64,18 @@ async def on_raw_reaction_add(payload):
         now = dt.now()
         now1 = str(now)
         await channel.send('Date&Time:\n'+now1+'\nmessage channel\n'+str(payload.channel_id)+'\nmessage-id\n'+str(payload.message_id)+'\nreaction-user-id\r\n'+str(payload.user_id)+'\n_')
-
+        
+    if not payload.channel_id == 744727455293767711:
+        return
+    else:
+        worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
+        worksheet_id = gc.open_by_key(SPREADSHEET_KEY).worksheet('ID_LIST')
+        search_mid = payload.message_id
+        mid_cell = worksheet_find.find(str(search_mid))
+        entry_num = worksheet_find.cell(mid_cell.row, 165).value
+        entry_col = int(entry_num) + int(11)
+        worksheet_find.update_cell(mid_cell.row, int(entry_col), str(payload.user_id))
+        
 @client.event
 async def on_raw_reaction_remove(payload):
 #async def on_raw_reaction_add(reaction, user):
@@ -83,7 +94,8 @@ async def on_message(message):
     wai_channel = client.get_channel(658468918243098626)  #本番用
     ami_channel = client.get_channel(675359824803790850)
     list_channel = client.get_channel(743314066713477251)
-
+    regi_channel = client.get_channel(744727455293767711)
+    
     if message.author == client.user:
         return
 
@@ -220,6 +232,7 @@ async def on_message(message):
             worksheet_list.update_cell(input_id, 7, str(message.id))
             worksheet_list.update_cell(input_id, 9, str('-'))
             worksheet_list.update_cell(input_id, 10, str('-'))
+            await regi_channel.send('ID:' + str(id_no) + 'で登録しました。')
 
 
     if message.content.startswith('!droplist_r'):
