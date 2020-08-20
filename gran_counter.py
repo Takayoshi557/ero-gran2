@@ -244,10 +244,46 @@ async def on_message(message):
             worksheet_list.update_cell(input_id, 7, str(message.id))
             worksheet_list.update_cell(input_id, 9, str('-'))
             worksheet_list.update_cell(input_id, 10, str('-'))
-            await regi_channel.send('ID: r' + str(id_no) + ' で登録しました。')
 
-
-    if message.content.startswith('!droplist_r'):
+            drp = discord.Embed(title= '" ' + str(drop_high_boss) + ' " dropped " ' + str(drop_high_item) + ' "\nOwner(所有者):  ' + str(message.author.name) + '\nAllocated ID: r' + str(id_no),
+                                description='Please reaction!',
+                                color=discord.Colour.red())
+            #               await wai_channel.send(embed=grn)
+            msg = await regi_channel.send(embed=drp)  # debag
+            #               msg = await grn_channel.send(embed=grn)#本番
+            emoji1 = '\U0001F947'
+            await msg.add_reaction(emoji1)
+            worksheet_list.update_cell(input_id, 7, str(msg.id))
+            await message.delete()
+            return
+        
+    if message.content.startswith('!r_del '):
+        if message.channel.id == 743314066713477251:
+            worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
+            del_list = message.content.split()
+            del_cell = worksheet_find.findall(str(del_list[1]))
+            worksheet_find.update_cell(del_cell[0].row, 1, '')
+            worksheet_find.update_cell(del_cell[0].row, 2, '')
+            worksheet_find.update_cell(del_cell[0].row, 3, '')
+            worksheet_find.update_cell(del_cell[0].row, 4, '')
+            worksheet_find.update_cell(del_cell[0].row, 5, '')
+            worksheet_find.update_cell(del_cell[0].row, 6, '')
+            worksheet_find.update_cell(del_cell[0].row, 7, '')
+            worksheet_find.update_cell(del_cell[0].row, 9, '')
+            worksheet_find.update_cell(del_cell[0].row, 10, '')
+            del_p = int(worksheet_find.cell(del_cell[0].row, 165).value)
+            for num in range(del_p):
+                num = num + int(11)
+                worksheet_find.update_cell(del_cell[0].row, num, '')
+                
+    if message.content.startswith('!own_change '):
+        if message.channel.id == 743314066713477251:
+            worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
+            che_list = message.content.split()
+            che_cell = worksheet_find.findall(str(che_list[1]))
+            worksheet_find.update_cell(che_cell[0].row, 4, str(che_list[2]))
+                
+    if message.content.startswith('!rlist'):
         if message.channel.id == 743314066713477251:
             worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
             worksheet_id = gc.open_by_key(SPREADSHEET_KEY).worksheet('ID_LIST')
@@ -265,18 +301,30 @@ async def on_message(message):
             get_r = discord.Embed(title='DROP ITEM LIST (GRADE: RARE)', description='ID \t:\t  boss \t/  item \t/  holder \t/  date', color=discord.Colour.red())
             get_r.add_field(name='---------------------------------------------', value=str(r_list), inline=True)
             await list_channel.send(embed=get_r)
-
             return
 
-    if message.content.startswith('!bunr '):
-        if not message.channel.id == 740355050182017135:
-            return
-        worksheet_list = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
-        rbun_list = message.content.split()
-        rbun_id = rbun_list[1]
-        rbun_dia = rbun_list[2]
-        rbun_buyer = rbun_list[3]
-        id_cell = worksheet_list.find(str(rbun_id))
+    if message.content.startswith('!repor '):
+        if message.channel.id == 743314066713477251:
+            worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
+            id_cell_list = message.content.split()
+            id_cell = worksheet_find.findall(str(id_cell_list[1]))
+            pp = worksheet_find.cell(id_cell[0].row, 165).value
+            get_id = worksheet_find.cell(id_cell[0].row, 1).value
+            get_boss = worksheet_find.cell(id_cell[0].row, 2).value
+            get_item = worksheet_find.cell(id_cell[0].row, 3).value
+            get_name = worksheet_find.cell(id_cell[0].row, 4).value
+            get_date = worksheet_find.cell(id_cell[0].row, 5).value
+            add_col = int(11)
+            id_check = list()
+            for num in range(int(pp)):
+                id_col = int(num) + int(add_col)
+                id_check.append('<@' + worksheet_find.cell(id_cell[0].row, id_col).value + '>')
+            drp = discord.Embed(
+                title='ID: '+str(get_id)+' detail',
+                description='BOSS: '+str(get_boss)+' / ITEM: '+str(get_item)+'\nOWNER: '+str(get_name)+' / DATA: '+str(get_date)+'\nENTRY\n'+str(id_check),
+                color=discord.Colour.red())
+            msg = await list_channel.send(embed=drp)  # debag
+
         if str(worksheet_list.cell(id_cell.row, 6).value) == str('finish'):
             await culc_channel.send('このID案件は分配案内が完了しています。\n変更したい方は えろてろ までご連絡おねがいします。')
             return
@@ -292,19 +340,24 @@ async def on_message(message):
                 bunpa = dia / pp
                 if bunpa < 50:
                     dice = random.randint(1, pp)  # サイコロを振る。出る目を指定。
-                    await culc_channel.send(
-                        '分配が50dia未満(' + str(math.floor(bunpa)) + 'dia/人)なので、抽選を行います。\nリアクション表示の上から ' + str(
-                            dice) + ' 番目の方に ' + str(dia) + ' diaを渡してください。\nリアクション表示と人数が異なる場合は別途抽選を行ってください。')
+                    dice_a = int(dice) + int(11) - int(1)
+                    ran_men = worksheet_list.cell(id_cell.row, int(dice_a)).value
+                    await culc_channel.send(str(rbun_id) + 'の' + str(worksheet_list.cell(id_cell.row, 2).value) + '/' + str(worksheet_list.cell(id_cell.row, 3).value) +' が' + str(dia) + ' diaで売れたので分配を行います。\n分配が50dia未満(' + str(math.floor(bunpa)) + 'dia/人)なので、抽選になります。\n抽選の結果、<@' + str(ran_men) + '> が当選！\n' + str(dia) + ' diaの取引をお願いします。')
                     return
                 else:
-                    await culc_channel.send(
-                        '10人未満,5000dia未満なので以下となります。\n分配：' + str(math.floor(bunpa)) + 'dia\n血盟資金、分配者手数料はありません。')
+                    await culc_channel.send(str(rbun_id) + 'の' + str(worksheet_list.cell(id_cell.row, 2).value) + '/' + str(worksheet_list.cell(id_cell.row, 3).value) +' が' + str(dia) + ' diaで売れました。\nメンションされている方々は以下に従い' + str(worksheet_list.cell(id_cell.row, 4).value) +'と取引を行って下さい。\n分配：' + str(math.floor(bunpa)) + 'dia')
+                    for num in range(pp):
+                        id_col = int(num) + int(11)
+                        ment_id = '<@' + str(worksheet_list.cell(id_cell.row, id_col).value) + '>'
+                        await culc_channel.send(' %s ' % ment_id)
                     return
+
             elif pp < 10 and dia >= 5000:
                 ketsu = dia * 0.03
                 bunpb = (dia - ketsu * 3) / pp
                 await culc_channel.send(str(rbun_id) + 'の' + str(worksheet_list.cell(id_cell.row, 2).value) + '/' + str(worksheet_list.cell(id_cell.row, 3).value) +' が' + str(dia) + ' diaで売れました。\nメンションされている方々は以下に従い' + str(worksheet_list.cell(id_cell.row, 4).value) +'と取引を行って下さい。\n各盟主は血盟資金として ' + str(math.floor(ketsu)) + 'diaを出品してください。\nメンションされている方々は ' + str(
-                        math.floor(bunpb)) + 'diaで出品して下さい。\n分配者手数料は１０人未満なのでありません。')
+                        math.floor(bunpb)) + 'diaで出品して下さい。')
+                await culc_channel.send('血盟資金\n<@462190506655612929>, <@477504935727071232>, <@290377448711782400>\n\n分配\n')
                 for num in range(pp):
                     id_col = int(num) + int(11)
                     ment_id = '<@' + str(worksheet_list.cell(id_cell.row, id_col).value) + '>'
@@ -316,15 +369,25 @@ async def on_message(message):
                     tema = dia * 0.05
                     if tema < 500:
                         bunpb = (dia - ketsu * 3 - tema) / pp
-                        await culc_channel.send('10人以上, 5000dia以上なので以下となります。\n血盟資金:' + str(
-                            math.floor(ketsu)) + 'diaを各盟主へ渡してください。\n分配：' + str(
-                            math.floor(bunpb)) + 'diaになります。\nちなみに手間賃は' + str(math.floor(tema)) + 'diaです。')
+                        await culc_channel.send(str(rbun_id) + 'の' + str(worksheet_list.cell(id_cell.row, 2).value) + '/' + str(worksheet_list.cell(id_cell.row, 3).value) +' が' + str(dia) + ' diaで売れました。\nメンションされている方々は以下に従い' + str(worksheet_list.cell(id_cell.row, 4).value) +'と取引を行って下さい。\n血盟資金:' + str(math.floor(ketsu)) + 'diaを各盟主へ渡してください。\n分配：' + str(math.floor(bunpb)) + 'diaになります。')
+                        await culc_channel.send(
+                            '血盟資金\n<@462190506655612929>, <@477504935727071232>, <@290377448711782400>\n\n分配\n')
+                        for num in range(pp):
+                            id_col = int(num) + int(11)
+                            ment_id = '<@' + str(worksheet_list.cell(id_cell.row, id_col).value) + '>'
+                            await culc_channel.send(' %s ' % ment_id)
                     elif tema >= 500:
                         tema = 500
                         bunpb = (dia - ketsu * 3 - tema) / pp
-                        await culc_channel.send('10人以上, 5000dia以上なので以下となります。\n血盟資金:' + str(
+                        await culc_channel.send(str(rbun_id) + 'の' + str(worksheet_list.cell(id_cell.row, 2).value) + '/' + str(worksheet_list.cell(id_cell.row, 3).value) +' が' + str(dia) + ' diaで売れました。\nメンションされている方々は以下に従い' + str(worksheet_list.cell(id_cell.row, 4).value) +'と取引を行って下さい。\n血盟資金:' + str(
                             math.floor(ketsu)) + 'diaを各盟主へ渡してください。\n分配：' + str(
                             math.floor(bunpb)) + 'diaになります。\nちなみに手間賃は上限の' + str(math.floor(tema)) + 'diaです。')
+                        await culc_channel.send(
+                            '血盟資金\n<@462190506655612929>, <@477504935727071232>, <@290377448711782400>\n\n分配\n')
+                        for num in range(pp):
+                            id_col = int(num) + int(11)
+                            ment_id = '<@' + str(worksheet_list.cell(id_cell.row, id_col).value) + '>'
+                            await culc_channel.send(' %s ' % ment_id)
                     else:
                         await culc_channel.send('えろてろまで問い合わせを。')
 
@@ -334,14 +397,18 @@ async def on_message(message):
                     bunpb = (dia - tema) / pp
                     if bunpb < 50:
                         dice = random.randint(1, pp)  # サイコロを振る。出る目を指定。
-                        await culc_channel.send(
-                            '分配が50dia未満(' + str(math.floor(bunpb)) + 'dia/人)なので、抽選を行います。\nリアクション表示の上から ' + str(
-                                dice) + ' 番目の方に' + str(dia) + 'diaを渡してください。\nリアクション表示と人数が異なる場合は別途抽選を行ってください。')
+                        dice_a = int(dice) + int(11) - int(1)
+                        ran_men = worksheet_list.cell(id_cell.row, int(dice_a)).value
+                        await culc_channel.send(str(rbun_id) + 'の' + str(worksheet_list.cell(id_cell.row, 2).value) + '/' + str(worksheet_list.cell(id_cell.row, 3).value) +' が' + str(dia) + ' diaで売れました。\n分配が50dia未満(' + str(math.floor(bunpb)) + 'dia/人)なので、抽選を行います。\n抽選の結果、<@' + str(ran_men) + '> が当選！\n' + str(dia) + ' diaの取引をお願いします。')
                         return
                     else:
-                        await culc_channel.send(
-                            '10人以上, 5000dia未満なので以下となります。\n分配：' + str(math.floor(bunpb)) + 'diaになります。\n分配者手数料は' + str(
+                        await culc_channel.send(str(rbun_id) + 'の' + str(worksheet_list.cell(id_cell.row, 2).value) + '/' + str(worksheet_list.cell(id_cell.row, 3).value) +' が' + str(dia) + ' diaで売れました。\n10人以上, 5000dia未満なので以下となります。\n分配：' + str(math.floor(bunpb)) + 'diaになります。\n分配者手数料は' + str(
                                 math.floor(tema)) + 'diaです。\n血盟資金はありません。')
+
+                        for num in range(pp):
+                            id_col = int(num) + int(11)
+                            ment_id = '<@' + str(worksheet_list.cell(id_cell.row, id_col).value) + '>'
+                            await culc_channel.send(' %s ' % ment_id)
                         return
                 else:
                     if pp >= 25 and dia >= 5000:
