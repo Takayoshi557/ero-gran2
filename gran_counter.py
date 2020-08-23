@@ -57,37 +57,43 @@ SPREADSHEET_KEY = '1HsQ_p2Hsg2g4tb8bXClOqseIhCYoI-4-FaWNrlktdnE'
 async def on_raw_reaction_add(payload):
 #async def on_raw_reaction_add(reaction, user):
 #    with open('gran_log.txt', 'a', newline='') as f:
+
     if not payload.channel_id == 732658643740262553:
-        if not payload.channel_id == 744727455293767711:
-            if payload.user_id == 689736979075825706:
-                return
-            else:
-                channel = client.get_channel(722253361159864479)
-                worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
-                search_mid = payload.message_id
-                mid_cell = worksheet_find.find(str(search_mid))
-                entry_num = worksheet_find.cell(mid_cell.row, 165).value
-                entry_col = int(entry_num) + int(11)
-                worksheet_find.update_cell(mid_cell.row, int(entry_col), str(payload.user_id))
-#                await channel.send('なぜに？')
-            return
-        else:    
-            channel = client.get_channel(722253361159864479)
-            now = dt.now()
-            now1 = str(now)
-            await channel.send('Date&Time:\n'+now1+'\nmessage channel\n'+str(payload.channel_id)+'\nmessage-id\n'+str(payload.message_id)+'\nreaction-user-id\r\n'+str(payload.user_id)+'\n_')
-        
-    if not payload.channel_id == 744727455293767711:
         return
     else:
         channel = client.get_channel(722253361159864479)
-        worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
-        search_mid = payload.message_id
-        mid_cell = worksheet_find.find(str(search_mid))
-        entry_num = worksheet_find.cell(mid_cell.row, 165).value
-        entry_col = int(entry_num) + int(11)
-        worksheet_find.update_cell(mid_cell.row, int(entry_col), str(payload.user_id))
-        await channel.send('なぜに？')
+        now2 = dt.now()
+        now3 = str(now2)
+            await channel.send('Date&Time:\n'+now1+'\nmessage channel\n'+str(payload.channel_id)+'\nmessage-id\n'+str(payload.message_id)+'\nreaction-user-id\r\n'+str(payload.user_id)+'\n_')
+
+#    if not payload.channel_id == 732658643740262553:
+#        if not payload.channel_id == 744727455293767711:
+#            channel = client.get_channel(722253361159864479)
+#            worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
+#            search_mid = payload.message_id
+#            mid_cell = worksheet_find.find(str(search_mid))
+#            entry_num = worksheet_find.cell(mid_cell.row, 165).value
+#            entry_col = int(entry_num) + int(11)
+#            worksheet_find.update_cell(mid_cell.row, int(entry_col), str(payload.user_id))
+#                await channel.send('なぜに？')
+#            return
+#        else:    
+#            channel = client.get_channel(722253361159864479)
+#            now = dt.now()
+#            now1 = str(now)
+#            await channel.send('Date&Time:\n'+now1+'\nmessage channel\n'+str(payload.channel_id)+'\nmessage-id\n'+str(payload.message_id)+'\nreaction-user-id\r\n'+str(payload.user_id)+'\n_')
+#        
+#    if not payload.channel_id == 744727455293767711:
+#        return
+#    else:
+#        channel = client.get_channel(722253361159864479)
+#        worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
+#        search_mid = payload.message_id
+#        mid_cell = worksheet_find.find(str(search_mid))
+#        entry_num = worksheet_find.cell(mid_cell.row, 165).value
+#        entry_col = int(entry_num) + int(11)
+#        worksheet_find.update_cell(mid_cell.row, int(entry_col), str(payload.user_id))
+#        await channel.send('なぜに？')
         
 @client.event
 async def on_raw_reaction_remove(payload):
