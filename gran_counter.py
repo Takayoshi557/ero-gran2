@@ -64,7 +64,7 @@ async def on_raw_reaction_add(payload):
         channel = client.get_channel(722253361159864479)
         now2 = dt.now()
         now3 = str(now2)
-            await channel.send('Date&Time:\n'+now1+'\nmessage channel\n'+str(payload.channel_id)+'\nmessage-id\n'+str(payload.message_id)+'\nreaction-user-id\r\n'+str(payload.user_id)+'\n_')
+        await channel.send('Date&Time:\n'+now1+'\nmessage channel\n'+str(payload.channel_id)+'\nmessage-id\n'+str(payload.message_id)+'\nreaction-user-id\r\n'+str(payload.user_id)+'\n_')
 
 #    if not payload.channel_id == 732658643740262553:
 #        if not payload.channel_id == 744727455293767711:
