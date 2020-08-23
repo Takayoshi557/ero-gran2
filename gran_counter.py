@@ -61,8 +61,8 @@ async def on_raw_reaction_add(payload):
         channel = client.get_channel(722253361159864479)
         now1 = dt.now()
         now2 = str(now2)
-        await channel.send('Date&Time:\n'+now2+'\nmessage channel\n'+str(payload.channel_id)+'\nmessage-id\n'+str(payload.message_id)+'\nreaction-user-id\r\n'+str(payload.user_id)+'\n_')
-
+    await channel.send('Date&Time:\n' + now2 + '\nmessage channel\n' + str(payload.channel_id) + '\nmessage-id\n'+str(payload.message_id) + '\nreaction-user-id\r\n' + str(payload.user_id) + '\n_')
+     
              
 @client.event
 async def on_raw_reaction_remove(payload):
