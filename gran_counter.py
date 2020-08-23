@@ -51,17 +51,19 @@ gc = gspread.authorize(credentials)
 #共有設定したスプレッドシートキーを変数[SPREADSHEET_KEY]に格納する。
 SPREADSHEET_KEY = '1HsQ_p2Hsg2g4tb8bXClOqseIhCYoI-4-FaWNrlktdnE'
 
-
-
 @client.event
 async def on_raw_reaction_add(payload):
-    if payload.channel_id == 732658643740262553:
+    if not payload.channel_id == 722253530576060497:
+        return
+
+    if payload.user_id == 695680339497975828 and payload.user_id == 689736979075825706:
+        return
+    else:
         channel = client.get_channel(722253361159864479)
-        now1 = dt.now()
-        now2 = str(now2)
-        await channel.send('Date&Time:\n' + now2 + '\nmessage channel\n' + str(payload.channel_id) + '\nmessage-id\n'+str(payload.message_id) + '\nreaction-user-id\r\n' + str(payload.user_id) + '\n_')
-     
-             
+        now = dt.now()
+        now1 = str(now)
+        await channel.send('Date&Time:\n'+now1+'\nmessage channel & id\n'+str(payload.channel_id)+'\nmessage-id\n'+str(payload.message_id)+'\nreaction-user-id\r\n'+str(payload.user_id)+'\n_')
+    
 @client.event
 async def on_raw_reaction_remove(payload):
     if not payload.channel_id == 732658643740262553:
