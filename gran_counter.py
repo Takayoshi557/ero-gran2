@@ -53,10 +53,7 @@ SPREADSHEET_KEY = '1HsQ_p2Hsg2g4tb8bXClOqseIhCYoI-4-FaWNrlktdnE'
 
 @client.event
 async def on_raw_reaction_add(payload):
-    if not payload.channel_id == 7732658643740262553:
-        return
-
-    if payload.user_id == 695680339497975828 and payload.user_id == 689736979075825706:
+    if not payload.channel_id == 732658643740262553:
         return
     else:
         channel = client.get_channel(722253361159864479)
