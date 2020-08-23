@@ -55,16 +55,25 @@ SPREADSHEET_KEY = '1HsQ_p2Hsg2g4tb8bXClOqseIhCYoI-4-FaWNrlktdnE'
 
 @client.event
 async def on_raw_reaction_add(payload):
-#async def on_raw_reaction_add(reaction, user):
-#    with open('gran_log.txt', 'a', newline='') as f:
-
     if not payload.channel_id == 732658643740262553:
         return
     else:
         channel = client.get_channel(722253361159864479)
         now1 = dt.now()
-    await channel.send('Date&Time:\n'+now1+'\nmessage channel\n'+str(payload.channel_id)+'\nmessage-id\n'+str(payload.message_id)+'\nreaction-user-id\r\n'+str(payload.user_id)+'\n_')
+        now2 = str(now2)
+        await channel.send('Date&Time:\n'+now2+'\nmessage channel\n'+str(payload.channel_id)+'\nmessage-id\n'+str(payload.message_id)+'\nreaction-user-id\r\n'+str(payload.user_id)+'\n_')
 
+             
+@client.event
+async def on_raw_reaction_remove(payload):
+    if not payload.channel_id == 732658643740262553:
+        return
+    else:
+        channel = client.get_channel(722253361159864479)
+        now2 = dt.now()
+        now3 = str(now2)
+    await channel.send('Date&Time:\n' + now3 + '\nmessage channel\n' + str(payload.channel_id) + '\nmessage-id\n'+str(payload.message_id) + '\nreaction-user-id\r\n' + str(payload.user_id) + 'del\n_')
+        
 #    if not payload.channel_id == 732658643740262553:
 #        if not payload.channel_id == 744727455293767711:
 #            channel = client.get_channel(722253361159864479)
@@ -93,19 +102,7 @@ async def on_raw_reaction_add(payload):
 #        entry_col = int(entry_num) + int(11)
 #        worksheet_find.update_cell(mid_cell.row, int(entry_col), str(payload.user_id))
 #        await channel.send('なぜに？')
-        
-@client.event
-async def on_raw_reaction_remove(payload):
-#async def on_raw_reaction_add(reaction, user):
-#    with open('gran_log.txt', 'a', newline='') as f:
-        if not payload.channel_id == 732658643740262553:
-            return
-        else:
-            channel = client.get_channel(722253361159864479)
-            now2 = dt.now()
-            now3 = str(now2)
-        await channel.send('Date&Time:\n' + now3 + '\nmessage channel\n' + str(payload.channel_id) + '\nmessage-id\n'+str(payload.message_id) + '\nreaction-user-id\r\n' + str(payload.user_id) + 'del\n_')
-        
+   
 @client.event
 async def on_message(message):
     culc_channel = client.get_channel(740355050182017135)  #本番用
