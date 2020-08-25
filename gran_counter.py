@@ -1,5 +1,5 @@
 # インストールした discord.py を読み込む
-#import asyncio
+import asyncio
 import time
 import discord
 from discord.ext import commands
