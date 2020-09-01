@@ -268,7 +268,7 @@ async def on_message(message):
     # アイテム管理用リアクション追加
     # **********************************#
 
-    # boss drop management bot. (!get(n or r) BossName DropItem)### n = normal, r = rare
+        # boss drop management bot. (!get(n or r) BossName DropItem)### n = normal, r = rare
     elif message.content.startswith('get '):
         if message.channel.id == 744727455293767711:
             drop_high_list = message.content.split()
@@ -288,23 +288,20 @@ async def on_message(message):
             worksheet_list.update_cell(input_id, 5, str(message.author.name))
             worksheet_list.update_cell(input_id, 6, str(today.year) + '/' + str(today.month) + '/' + str(today.day))
             worksheet_list.update_cell(input_id, 7, str('none'))
-#            worksheet_list.update_cell(input_id, 8, str(message.id))
+            #            worksheet_list.update_cell(input_id, 8, str(message.id))
             worksheet_list.update_cell(input_id, 10, str('-'))
             worksheet_list.update_cell(input_id, 11, str('-'))
             worksheet_list.update_cell(input_id, 12, str(message.author.id))
-            
 
             drp = discord.Embed(
-                title='ID: r' + str(id_no) + '" ' + str(drop_high_boss) + ' " dropped " ' + str(drop_high_item + ' "',
-                description='参加者はリアクションして下さい。/Please reaction!',
-                color=discord.Colour.red())
+                title='ID: r' + str(id_no) + '" ' + str(drop_high_boss) + ' " dropped " ' + str(drop_high_item) + ' "', description='参加者はリアクションして下さい。/Please reaction!', color=discord.Colour.red())
             #               await wai_channel.send(embed=grn)
             msg = await regi_channel.send(embed=drp)  # debag
             #               msg = await grn_channel.send(embed=grn)#本番
             emoji1 = '\U0001F947'
             await msg.add_reaction(emoji1)
             worksheet_list.update_cell(input_id, 8, str(msg.id))
-#            await message.delete()
+            #            await message.delete()
             return
 
     elif message.content.startswith('!getn '):
