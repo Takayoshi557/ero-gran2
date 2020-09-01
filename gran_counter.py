@@ -304,7 +304,7 @@ async def on_message(message):
             worksheet_list.update_cell(input_id, 12, str(message.author.id))
 
             drp = discord.Embed(
-                title='ID: r' + str(id_no) + ' // " ' + str(drop_high_boss) + ' " dropped " ' + str(drop_high_item) + ' "', description='参加者はリアクションして下さい。/Please reaction!', color=discord.Colour.red())
+                title='ID: r' + str(id_no) + '" ' + str(drop_high_boss) + ' " dropped " ' + str(drop_high_item) + ' "\n拾得者:' + str(message.author.name), description='参加者はリアクションして下さい。/Please reaction!', color=discord.Colour.red())
             #               await wai_channel.send(embed=grn)
             msg = await regi_channel.send(embed=drp)  # debag
             #               msg = await grn_channel.send(embed=grn)#本番
