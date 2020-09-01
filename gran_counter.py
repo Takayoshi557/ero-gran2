@@ -269,7 +269,7 @@ async def on_message(message):
     # **********************************#
 
     # boss drop management bot. (!get(n or r) BossName DropItem)### n = normal, r = rare
-    elif message.content.startswith('!getr '):
+    elif message.content.startswith('get '):
         if message.channel.id == 744727455293767711:
             drop_high_list = message.content.split()
             drop_high_boss = drop_high_list[1]
@@ -291,11 +291,12 @@ async def on_message(message):
 #            worksheet_list.update_cell(input_id, 8, str(message.id))
             worksheet_list.update_cell(input_id, 10, str('-'))
             worksheet_list.update_cell(input_id, 11, str('-'))
+            worksheet_list.update_cell(input_id, 12, str(message.author.id))
+            
 
             drp = discord.Embed(
-                title='" ' + str(drop_high_boss) + ' " dropped " ' + str(drop_high_item) + ' "\nOwner(所有者):  ' + str(
-                    message.author.name) + '\nAllocated ID: r' + str(id_no),
-                description='Please reaction!',
+                title='ID: r' + str(id_no) + '" ' + str(drop_high_boss) + ' " dropped " ' + str(drop_high_item + ' "',
+                description='参加者はリアクションして下さい。/Please reaction!',
                 color=discord.Colour.red())
             #               await wai_channel.send(embed=grn)
             msg = await regi_channel.send(embed=drp)  # debag
@@ -303,7 +304,7 @@ async def on_message(message):
             emoji1 = '\U0001F947'
             await msg.add_reaction(emoji1)
             worksheet_list.update_cell(input_id, 8, str(msg.id))
-            await message.delete()
+#            await message.delete()
             return
 
     elif message.content.startswith('!getn '):
@@ -370,7 +371,7 @@ async def on_message(message):
             che_cell = worksheet_find.findall(str(che_list[1]))
             worksheet_find.update_cell(che_cell[0].row, 5, str(che_list[2]))
 
-    elif message.content.startswith('!list all'):
+    elif message.content.startswith('list'):
         if message.channel.id == 743314066713477251:
             worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
             worksheet_id = gc.open_by_key(SPREADSHEET_KEY).worksheet('ID_LIST')
@@ -441,7 +442,7 @@ async def on_message(message):
             await list_channel.send(embed=get_r)
             return
 
-    elif message.content.startswith('!repo '):
+    elif message.content.startswith('repo '):
         if message.channel.id == 743314066713477251:
             worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
             id_cell_list = message.content.split()
@@ -465,7 +466,7 @@ async def on_message(message):
                 color=discord.Colour.red())
             msg = await list_channel.send(embed=drp)  # debag
 
-    elif message.content.startswith('!distr '):
+    elif message.content.startswith('distr '):
         worksheet_list = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
         worksheet_id = gc.open_by_key(SPREADSHEET_KEY).worksheet('ID_LIST')
         rbun_list = message.content.split()
