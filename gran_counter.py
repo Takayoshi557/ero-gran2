@@ -50,8 +50,11 @@ gc = gspread.authorize(credentials)
 SPREADSHEET_KEY = '1HsQ_p2Hsg2g4tb8bXClOqseIhCYoI-4-FaWNrlktdnE'
 
 
+
 @client.event
 async def on_raw_reaction_add(payload):
+    regi_channel = client.get_channel(744727455293767711)
+
     if payload.user_id == 689736979075825706:
         return
 
@@ -65,9 +68,16 @@ async def on_raw_reaction_add(payload):
         worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
         search_mid = payload.message_id
         mid_cell = worksheet_find.find(str(search_mid))
-        entry_num = worksheet_find.cell(mid_cell.row, 166).value
-        entry_col = int(entry_num) + int(12)
-        worksheet_find.update_cell(mid_cell.row, int(entry_col), str(payload.user_id))
+        entry1_id = worksheet_find.cell(mid_cell.row, 12).value
+        if str(entry1_id) == str(payload.user_id):
+            msg = await regi_channel.send('拾得者（登録した人）はリアクションは不要なので解除して下さい。\n他に修正が必要な場合は"えろてろ"までご連絡をお願いします。\n本メッセージは10秒後に自動で削除されます。')
+            await asyncio.sleep(11)
+            await msg.delete()
+
+        else:
+            entry_num = worksheet_find.cell(mid_cell.row, 166).value
+            entry_col = int(entry_num) + int(12)
+            worksheet_find.update_cell(mid_cell.row, int(entry_col), str(payload.user_id))
 
 
 @client.event
@@ -81,15 +91,18 @@ async def on_raw_reaction_remove(payload):
         now3 = str(now2)
         await channel.send('Date&Time:\n' + now3 + '\nmessage channel\n' + str(payload.channel_id) + '\nmessage-id\n' + str(payload.message_id) + '\nreaction-user-id\r\n' + str(payload.user_id) + 'del\n_')
 
-
     elif payload.channel_id == 744727455293767711:
         worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
         search_mid = payload.message_id
         mid_cell = worksheet_find.find(str(search_mid))
         col_list = worksheet_find.row_values(mid_cell.row)
         entry_num = worksheet_find.cell(mid_cell.row, 166).value
+        entry1_id = worksheet_find.cell(mid_cell.row, 12).value
         del_col = int(col_list.index(str(payload.user_id))) + int(1)
-        if entry_num == 1:
+        if str(entry1_id) == str(payload.user_id):
+            print('同じだよ')
+            return
+        elif entry_num == 1:
             worksheet_find.update_cell(mid_cell.row, int(del_col), str(''))
             return
         else:
@@ -102,29 +115,6 @@ async def on_raw_reaction_remove(payload):
                 worksheet_find.update_cell(mid_cell.row, int(del_col2), up_id)
                 del_col2 = del_col + num
             worksheet_find.update_cell(mid_cell.row, int(del_col2), str(''))
-
-
-#        await channel.send('なぜに？')
-#            return
-#        else:
-#            channel = client.get_channel(722253361159864479)
-#            now = dt.now()
-#            now1 = str(now)
-#            await channel.send('Date&Time:\n'+now1+'\nmessage channel\n'
-#            +str(payload.channel_id)+'\nmessage-id\n'+str(payload.message_id)
-#            +'\nreaction-user-id\r\n'+str(payload.user_id)+'\n_')
-#
-#    if not payload.channel_id == 744727455293767711:
-#        return
-#    else:
-#        channel = client.get_channel(722253361159864479)
-#        worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
-#        search_mid = payload.message_id
-#        mid_cell = worksheet_find.find(str(search_mid))
-#        entry_num = worksheet_find.cell(mid_cell.row, 165).value
-#        entry_col = int(entry_num) + int(11)
-#        worksheet_find.update_cell(mid_cell.row, int(entry_col), str(payload.user_id))
-#        await channel.send('なぜに？')
 
 @client.event
 async def on_message(message):
@@ -290,7 +280,7 @@ async def on_message(message):
             id_total = worksheet_id.cell(4, 8).value
             id_num = worksheet_id.cell(4, 10).value
             input_id = int(id_total) + 2
-            id_no = int(id_num) + 1
+            id_no = int(id_num) + int(1)
             worksheet_list.update_cell(input_id, 1, 'r' + str(id_no))
             worksheet_list.update_cell(input_id, 2, str(drop_high_boss))
             worksheet_list.update_cell(input_id, 3, str(drop_high_item))
