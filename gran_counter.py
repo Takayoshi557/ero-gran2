@@ -382,7 +382,17 @@ async def on_message(message):
                 get_name = worksheet_find.cell(cell_list[num].row, 5).value
                 get_date = worksheet_find.cell(cell_list[num].row, 6).value
                 r_list.append(get_id + '\t: ' + get_boss + '\t/ ' + get_item + '\t/ ' + get_name + '\t/ ' + get_date)
-                await asyncio.sleep(5)
+                await asyncio.sleep(4)
+                if num == 20:
+                    r_list = '\n'.join(r_list)
+                    get_r = discord.Embed(title='DROP ITEM LIST (GRADE: ALL)',
+                                          description='ID \t:\t  boss \t/  item \t/  holder \t/  date',
+                                          color=discord.Colour.red())
+                    get_r.add_field(name='---------------------------------------------', value=str(r_list),
+                                    inline=True)
+                    await list_channel.send(embed=get_r)
+                    await list_channel.send('以下にまだ続きます。もうしばらくお待ちください。')
+                    r_list = list()
             r_list = '\n'.join(r_list)
             get_r = discord.Embed(title='DROP ITEM LIST (GRADE: ALL)',
                                   description='ID \t:\t  boss \t/  item \t/  holder \t/  date',
