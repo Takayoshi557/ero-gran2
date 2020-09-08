@@ -375,6 +375,7 @@ async def on_message(message):
             print(cell_list)
             deal_count = worksheet_id.cell(5, 8).value
             r_list = list()
+            await list_channel.send('listコマンド受け付けました。時間がかかりますので数分後にまた訪れて下さい。')
             for num in range(int(deal_count)):
                 get_id = worksheet_find.cell(cell_list[num].row, 1).value
                 get_boss = worksheet_find.cell(cell_list[num].row, 2).value
@@ -383,7 +384,7 @@ async def on_message(message):
                 get_date = worksheet_find.cell(cell_list[num].row, 6).value
                 r_list.append(get_id + '\t: ' + get_boss + '\t/ ' + get_item + '\t/ ' + get_name + '\t/ ' + get_date)
                 await asyncio.sleep(5)
-                if num == 20:
+                if num % 20 == 0:
                     r_list = '\n'.join(r_list)
                     get_r = discord.Embed(title='DROP ITEM LIST (GRADE: ALL)',
                                           description='ID \t:\t  boss \t/  item \t/  holder \t/  date',
