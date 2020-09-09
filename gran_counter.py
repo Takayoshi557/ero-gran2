@@ -603,7 +603,7 @@ async def on_message(message):
                         bunpd = dia / pp
                         if bunpd < 100:
                             meishubun2 = dia / 3
-                            await culc_channel.send('25人以上で分配が100dia/人 未満なので全額血盟資金となります。\n<@' + str(bun_buyer) + '>さんは3等分した'+ str(math.floor(meishubun2)) + 'diaを各盟主に渡してください。\n分配者手数料、血盟資金はありません。')
+                            await culc_channel.send('25人以上で分配が100dia/人 未満なので全額血盟資金となります。\n<@' + str(bun_buyer) + '>さんは3等分した'+ str(math.floor(meishubun2)) + 'diaを以下の各盟主に渡してください。\n<@462190506655612929>\n<@477504935727071232>\n<@290377448711782400>')
                         else:
                             
 
