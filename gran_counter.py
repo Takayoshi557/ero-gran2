@@ -566,7 +566,7 @@ async def on_message(message):
                         bunpc = (dia - ketsushi * 3) / pp
                         if bunpc < 100:
                             meishubun1 = dia / 3
-                            await culc_channel.send('25人以上 / 分配 100dia未満なので全額血盟資金となります。\n<@' + str(bun_buyer) + '>は３等分した' + str(
+                            await culc_channel.send(str(rbun_id) + 'の' + str(worksheet_list.cell(id_cell.row, 2).value) + '/' + str(worksheet_list.cell(id_cell.row, 3).value) +' が' + str(dia) + ' diaで売れたので分配を行います。\n25人以上 / 分配 100dia未満なので全額血盟資金となります。\n<@' + str(bun_buyer) + '>は' + str(
                                 math.floor(meishubun1)) + 'diaを以下の各盟主に渡してください。\n<@363032621845839892>\n<@477504935727071232>\n<@290377448711782400>')
                             return
                         else:
@@ -603,7 +603,7 @@ async def on_message(message):
                         bunpd = dia / pp
                         if bunpd < 100:
                             meishubun2 = dia / 3
-                            await culc_channel.send('25人以上で分配が100dia/人 未満なので全額血盟資金となります。\n<@' + str(bun_buyer) + '>さんは3等分した'+ str(math.floor(meishubun2)) + 'diaを以下の各盟主に渡してください。\n<@363032621845839892>\n<@477504935727071232>\n<@290377448711782400>')
+                            await culc_channel.send(str(rbun_id) + 'の' + str(worksheet_list.cell(id_cell.row, 2).value) + '/' + str(worksheet_list.cell(id_cell.row, 3).value) +' が' + str(dia) + ' diaで売れたので分配を行います。\n25人以上で分配が100dia/人 未満なので全額血盟資金となります。\n<@' + str(bun_buyer) + '>さんは'+ str(math.floor(meishubun2)) + 'diaを以下の各盟主に渡してください。\n<@363032621845839892>\n<@477504935727071232>\n<@290377448711782400>')
                         else:
                             
 
