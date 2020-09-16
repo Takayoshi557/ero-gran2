@@ -605,9 +605,118 @@ async def on_message(message):
                             meishubun2 = dia / 3
                             await culc_channel.send(str(rbun_id) + 'の' + str(worksheet_list.cell(id_cell.row, 2).value) + '/' + str(worksheet_list.cell(id_cell.row, 3).value) +' が' + str(dia) + ' diaで売れたので分配を行います。\n25人以上で分配が100dia/人 未満なので全額血盟資金となります。\n<@' + str(bun_buyer) + '>さんは'+ str(math.floor(meishubun2)) + 'diaを以下の各盟主に渡してください。\n<@363032621845839892>\n<@477504935727071232>\n<@290377448711782400>')
                         else:
-                            
+                            cama_num = 0
+                            death_num = 0
+                            samurai_num = 0
+                            for num in range(pp):
+                                id_col = int(num) + int(12)
+                                id_clan_posi = worksheet_id.find(str(worksheet_list.cell(id_cell.row, id_col).value))
+                                if id_clan_posi.col == 13:
+                                    cama_list.append('<@' + str(worksheet_list.cell(id_cell.row, id_col).value) + '>\n')
+                                    cama_num = cama_num + 1
+                                elif id_clan_posi.col == 16:
+                                    death_list.append('<@' + str(worksheet_list.cell(id_cell.row, id_col).value) + '>\n')
+                                    death_num = death_num + 1
+                                elif id_clan_posi.col == 19:
+                                    samurai_list.append('<@' + str(worksheet_list.cell(id_cell.row, id_col).value) + '>\n')
+                                    samurai_num = samurai_num + 1
+                            cama_list = '\n'.join(cama_list)
+                            death_list = '\n'.join(death_list)
+                            samurai_list = '\n'.join(samurai_list)
+                            await culc_channel.send(
+                                str(rbun_id) + 'の' + str(worksheet_list.cell(id_cell.row, 2).value) + '/' + str(
+                                    worksheet_list.cell(id_cell.row, 3).value) + ' が' + str(
+                                    dia) + ' diaで売れました。\n25人以上 / 分配 100dia以上なので盟主が分配します。以下に従って盟主と取引して下さい。' )
+                            cama_bun_total = bunpd * cama_num
+                            death_bun_total = bunpd * death_num
+                            samurai_bun_total = bunpd * samurai_num
+                            await culc_channel.send('<@477504935727071232>さんに' + str(cama_bun_total) + ' dia を渡してください。')
+                            await culc_channel.send('<@363032621845839892>さんに' + str(samurai_bun_total) + ' dia を渡してください。')
+                            await culc_channel.send('<@290377448711782400>さんに' + str(death_bun_total) + ' dia を渡してください。')
 
-                            await culc_channel.send('25人以上で分配が100dia/人 以上なのですが、分配分岐見直し中（9月9日発見）なので修正完了まで自力で計算するか、" えろてろ "まで連絡下さい。')
+                            if cama_num >= 10:
+                                cama_ketsu = cama_bun_total * 0.03
+                                cama_bun = (cama_bun_total - cama_ketsu) / cama_num
+                                await culc_channel.send('<@477504935727071232>さんは以下の方々に' + str(
+                                    cama_bun) + ' dia を渡してください。\nまた10名以上なので血盟資金が' + str(
+                                    cama_ketsu) + 'dia 発生していますので受領下さい。\n' + str(cama_list))
+
+                                if death_num >= 10:
+                                    death_ketsu = death_bun_total * 0.03
+                                    death_bun = (death_bun_total - death_ketsu) / cama_num
+                                    await culc_channel.send('<@290377448711782400>さんは以下の方々に' + str(
+                                        death_bun) + ' dia を渡してください。\nまた10名以上なので血盟資金が' + str(
+                                        death_ketsu) + 'dia 発生していますので受領下さい。\n' + str(death_list))
+
+                                    if samurai_num >= 10:
+                                        samurai_ketsu = samurai_bun_total * 0.03
+                                        samurai_bun = (samurai_bun_total - samurai_ketsu) / cama_num
+                                        await culc_channel.send('<@363032621845839892>さんは以下の方々に' + str(
+                                            samurai_bun) + ' dia を渡してください。\nまた10名以上なので血盟資金が' + str(
+                                            samurai_ketsu) + 'dia 発生していますので受領下さい。\n' + str(samurai_list))
+                                    else:
+                                        samurai_bun_total = bunpd * samurai_num
+                                        samurai_bun = samurai_bun_total / samurai_num
+                                        await culc_channel.send('<@363032621845839892>さんは以下の方々に' + str(
+                                            samurai_bun) + ' dia を渡してください。\n' + str(samurai_list))
+                                else:
+                                    death_bun_total = bunpd * death_num
+                                    death_bun = death_bun_total / death_num
+                                    await culc_channel.send('<@290377448711782400>さんは以下の方々に' + str(
+                                        death_bun) + ' dia を渡してください。\n' + str(death_list))
+                                    if samurai_num >= 10:
+                                        samurai_ketsu = samurai_bun_total * 0.03
+                                        samurai_bun = (samurai_bun_total - samurai_ketsu) / cama_num
+                                        await culc_channel.send('<@363032621845839892>さんは以下の方々に' + str(
+                                            samurai_bun) + ' dia を渡してください。\nまた10名以上なので血盟資金が' + str(
+                                            samurai_ketsu) + 'dia 発生していますので受領下さい。\n' + str(samurai_list))
+                                    else:
+                                        samurai_bun_total = bunpd * samurai_num
+                                        samurai_bun = samurai_bun_total / samurai_num
+                                        await culc_channel.send('<@363032621845839892>さんは以下の方々に' + str(
+                                            samurai_bun) + ' dia を渡してください。\n' + str(samurai_list))
+                            else:
+                                cama_bun_total = bunpd * cama_num
+                                cama_bun = cama_bun_total / cama_num
+                                await culc_channel.send(
+                                    '<@477504935727071232>さんに' + str(cama_bun_total) + ' dia を渡してください。')
+                                await culc_channel.send('<@477504935727071232>さんは以下の方々に' + str(
+                                    cama_bun) + ' dia を渡してください。\n' + str(cama_list))
+                                if death_num >= 10:
+                                    death_ketsu = death_bun_total * 0.03
+                                    death_bun = (death_bun_total - death_ketsu) / cama_num
+                                    await culc_channel.send('<@290377448711782400>さんは以下の方々に' + str(
+                                        death_bun) + ' dia を渡してください。\nまた10名以上なので血盟資金が' + str(
+                                        death_ketsu) + 'dia 発生していますので受領下さい。\n' + str(death_list))
+
+                                    if samurai_num >= 10:
+                                        samurai_ketsu = samurai_bun_total * 0.03
+                                        samurai_bun = (samurai_bun_total - samurai_ketsu) / cama_num
+                                        await culc_channel.send('<@363032621845839892>さんは以下の方々に' + str(
+                                            samurai_bun) + ' dia を渡してください。\nまた10名以上なので血盟資金が' + str(
+                                            samurai_ketsu) + 'dia 発生していますので受領下さい。\n' + str(samurai_list))
+                                    else:
+                                        samurai_bun_total = bunpd * samurai_num
+                                        samurai_bun = samurai_bun_total / samurai_num
+                                        await culc_channel.send('<@363032621845839892>さんは以下の方々に' + str(
+                                            samurai_bun) + ' dia を渡してください。\n' + str(samurai_list))
+                                else:
+                                    death_bun_total = bunpd * death_num
+                                    death_bun = death_bun_total / death_num
+                                    await culc_channel.send('<@290377448711782400>さんは以下の方々に' + str(
+                                        death_bun) + ' dia を渡してください。\n' + str(death_list))
+                                    if samurai_num >= 10:
+                                        samurai_ketsu = samurai_bun_total * 0.03
+                                        samurai_bun = (samurai_bun_total - samurai_ketsu) / cama_num
+                                        await culc_channel.send('<@363032621845839892>さんは以下の方々に' + str(
+                                            samurai_bun) + ' dia を渡してください。\nまた10名以上なので血盟資金が' + str(
+                                            samurai_ketsu) + 'dia 発生していますので受領下さい。\n' + str(samurai_list))
+                                    else:
+                                        samurai_bun_total = bunpd * samurai_num
+                                        samurai_bun = samurai_bun_total / samurai_num
+                                        await culc_channel.send('<@363032621845839892>さんは以下の方々に' + str(
+                                            samurai_bun) + ' dia を渡してください。\n' + str(samurai_list))
+                                        
                     else:
                         await culc_channel.send('えろてろまで問い合わせを。')
 
