@@ -379,25 +379,51 @@ async def on_message(message):
             await message.delete()
             return
 
-
     elif message.content.startswith('!del '):
         if message.channel.id == 743314066713477251:
-            worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
-            del_list = message.content.split()
-            del_cell = worksheet_find.findall(str(del_list[1]))
-#            worksheet_find.update_cell(del_cell[0].row, 1, '')
-            worksheet_find.update_cell(del_cell[0].row, 2, '-')
-            worksheet_find.update_cell(del_cell[0].row, 3, '-')
-#            worksheet_find.update_cell(del_cell[0].row, 4, '')
-            worksheet_find.update_cell(del_cell[0].row, 5, '-')
-            worksheet_find.update_cell(del_cell[0].row, 6, '-')
-            worksheet_find.update_cell(del_cell[0].row, 7, 'finish')
-            worksheet_find.update_cell(del_cell[0].row, 10, '')
-            worksheet_find.update_cell(del_cell[0].row, 11, '')
-            del_p = int(worksheet_find.cell(del_cell[0].row, 166).value)
-            for num in range(del_p):
-                num = num + int(12)
-                worksheet_find.update_cell(del_cell[0].row, num, '')
+            if message.author.id == 689731790935425034 or message.author.id == 592253165068615680 or message.author.id == 363032621845839892 or message.author.id == 600694063913631755 or message.author.id == 352019449022251009 or message.author.id == 477504935727071232 or message.author.id == 425017805729955840:
+                worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
+                del_list = message.content.split()
+                del_cell = worksheet_find.findall(str(del_list[1]))
+                del_id = worksheet_find.cell(del_cell[0].row, 1).value
+#                worksheet_find.update_cell(del_cell[0].row, 1, '')
+                worksheet_find.update_cell(del_cell[0].row, 2, '-')
+                worksheet_find.update_cell(del_cell[0].row, 3, '-')
+#                worksheet_find.update_cell(del_cell[0].row, 4, '')
+                worksheet_find.update_cell(del_cell[0].row, 5, '-')
+                worksheet_find.update_cell(del_cell[0].row, 6, '-')
+                worksheet_find.update_cell(del_cell[0].row, 7, 'delete')
+                worksheet_find.update_cell(del_cell[0].row, 10, '')
+                worksheet_find.update_cell(del_cell[0].row, 11, '')
+                del_p = int(worksheet_find.cell(del_cell[0].row, 166).value)
+                for num in range(del_p):
+                    num = num + int(12)
+                    worksheet_find.update_cell(del_cell[0].row, num, '')
+                await list_channel.send(del_id + 'を削除しました。')
+
+    elif message.content.startswith('!back '):
+        if message.channel.id == 743314066713477251:
+            if message.author.id == 689731790935425034 or message.author.id == 592253165068615680 or message.author.id == 363032621845839892 or message.author.id == 600694063913631755 or message.author.id == 352019449022251009 or message.author.id == 477504935727071232 or message.author.id == 425017805729955840:
+                worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
+                del_list = message.content.split()
+                del_cell = worksheet_find.findall(str(del_list[1]))
+                del_id = worksheet_find.cell(del_cell[0].row, 1).value
+                worksheet_find.update_cell(del_cell[0].row, 7, 'none')
+                worksheet_find.update_cell(del_cell[0].row, 10, '-')
+                await list_channel.send(del_id + 'を未分配に戻しました。')
+
+    elif message.content.startswith('!fin '):
+        if message.channel.id == 743314066713477251:
+            if message.author.id == 689731790935425034 or message.author.id == 592253165068615680 or message.author.id == 363032621845839892 or message.author.id == 600694063913631755 or message.author.id == 352019449022251009 or message.author.id == 477504935727071232 or message.author.id == 425017805729955840:
+                worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
+                fin_list = message.content.split()
+                fin_dia = fin_list[2]
+                fin_cell = worksheet_find.findall(str(fin_list[1]))
+                fin_id = worksheet_find.cell(fin_cell[0].row, 1).value
+                worksheet_find.update_cell(fin_cell[0].row, 7, 'finish')
+                worksheet_find.update_cell(fin_cell[0].row, 10, str(fin_dia))
+                await list_channel.send(fin_id + 'を分配完了にしました。')
+
 
     elif message.content.startswith('!own_change '):
         if message.channel.id == 743314066713477251:
@@ -493,42 +519,55 @@ async def on_message(message):
         if message.channel.id == 743314066713477251:
             worksheet_find = gc.open_by_key(SPREADSHEET_KEY).worksheet('rare(red,purple)')
             worksheet_id = gc.open_by_key(SPREADSHEET_KEY).worksheet('ID_LIST')
-            cell_list = worksheet_find.findall(str(message.author.name))
+            cell_list = worksheet_find.findall(str(message.author.id))
 #            cell_list = worksheet_find.findall(str('CAMARADE＠どすこい'))
             #print(cell_list)
             deal_count = len(cell_list)
-            if deal_count == 0:
+            confirm_list = list()
+            for num in range(int(deal_count)):
+                # print(int(cell_list[num].col))
+                if cell_list[num].col == 12:
+                    confirm_list.append(cell_list[num])
+            confirm_count = len(confirm_list)
+            # print(confirm_count)
+            # print(confirm_list)
+            if confirm_count == 0:
                 await list_channel.send('ご苦労様です。\n' + str(message.author.name) + ' さんの未分配案件はありません。')
                 return
             r_list = list()
-            #print(deal_count)
-            for num in range(int(deal_count)):
-                if worksheet_find.cell(cell_list[num].row, 7).value == 'none':
-                    get_id = worksheet_find.cell(cell_list[num].row, 1).value
-                    get_boss = worksheet_find.cell(cell_list[num].row, 2).value
-                    get_item = worksheet_find.cell(cell_list[num].row, 3).value
-                    get_name = worksheet_find.cell(cell_list[num].row, 5).value
-                    get_date = worksheet_find.cell(cell_list[num].row, 6).value
+            #print(confirm_count)
+            for num in range(int(confirm_count)):
+                # print(num)
+                # print(worksheet_find.cell(confirm_list[num].row, 7).value)
+                if worksheet_find.cell(confirm_list[num].row, 7).value == str('none'):
+                    get_id = worksheet_find.cell(confirm_list[num].row, 1).value
+                    get_boss = worksheet_find.cell(confirm_list[num].row, 2).value
+                    get_item = worksheet_find.cell(confirm_list[num].row, 3).value
+                    get_name = worksheet_find.cell(confirm_list[num].row, 5).value
+                    get_date = worksheet_find.cell(confirm_list[num].row, 6).value
                     r_list.append(get_id + '\t: ' + get_boss + '\t/ ' + get_item + '\t/ ' + get_name + '\t/ ' + get_date)
                     await asyncio.sleep(2)
+                    # print(r_list)
                 else:
                     await asyncio.sleep(1)
-             #   print(r_list)
-             #   print(len(r_list))
+                # print(r_list)
+                # print(len(r_list))
                 r_count = int(len(r_list))
-                if r_count == 0:
-                    await list_channel.send('ご苦労様です。\n' + str(message.author.name) + ' さんの未分配案件はありません。\n全て完了していました。')
-                    return
-                if num == 20:
-                    r_list = '\n'.join(r_list)
-                    get_r = discord.Embed(title='DROP ITEM LIST (GRADE: ALL)',
-                                          description='ID \t:\t  boss \t/  item \t/  holder \t/  date',
-                                          color=discord.Colour.red())
-                    get_r.add_field(name='---------------------------------------------', value=str(r_list),
-                                    inline=True)
-                    await list_channel.send(embed=get_r)
-                    await list_channel.send('以下にまだ続きます。もうしばらくお待ちください。')
-                    r_list = list()
+
+            if r_count == 0:
+                await list_channel.send('ご苦労様です。\n' + str(message.author.name) + ' さんの未分配案件はありません。\n全て完了していました。')
+                # print('ハズレー')
+                return
+            if num == 20:
+                r_list = '\n'.join(r_list)
+                get_r = discord.Embed(title='DROP ITEM LIST (GRADE: ALL)',
+                                      description='ID \t:\t  boss \t/  item \t/  holder \t/  date',
+                                      color=discord.Colour.red())
+                get_r.add_field(name='---------------------------------------------', value=str(r_list),
+                                inline=True)
+                await list_channel.send(embed=get_r)
+                await list_channel.send('以下にまだ続きます。もうしばらくお待ちください。')
+                r_list = list()
             r_list = '\n'.join(r_list)
             get_r = discord.Embed(title='DROP ITEM LIST (GRADE: ALL)',
                                   description='ID \t:\t  boss \t/  item \t/  holder \t/  date',
@@ -543,13 +582,13 @@ async def on_message(message):
             worksheet_id = gc.open_by_key(SPREADSHEET_KEY).worksheet('ID_LIST')
 #            cell_list = worksheet_find.findall(str(message.author.name))
             cell_list = worksheet_find.findall(str('メロリンＱ'))
-            print(cell_list)
+            # print(cell_list)
             deal_count = len(cell_list)
             if deal_count == 0:
                 await list_channel.send('ご苦労様です。\n' + str(message.author.name) + ' さんの未分配案件はありません。')
                 return
             r_list = list()
-            print(deal_count)
+            # print(deal_count)
             for num in range(int(deal_count)):
                 if worksheet_find.cell(cell_list[num].row, 7).value == 'none':
                     get_id = worksheet_find.cell(cell_list[num].row, 1).value
@@ -561,8 +600,8 @@ async def on_message(message):
                     await asyncio.sleep(2)
                 else:
                     await asyncio.sleep(1)
-                print(r_list)
-                print(len(r_list))
+                # print(r_list)
+                # print(len(r_list))
                 r_count = int(len(r_list))
                 if r_count == 0:
                     await list_channel.send('ご苦労様です。\n' + str(message.author.name) + ' さんの未分配案件はありません。\n全て完了していました。')
@@ -745,7 +784,7 @@ async def on_message(message):
                             bun_death = bunpc * death_num + ketsushi
                             bun_samurai = bunpc * samurai_num + ketsushi
 
-                            await culc_channel.send(str(rbun_id) + 'の' + str(worksheet_list.cell(id_cell.row, 2).value) + '/' + str(worksheet_list.cell(id_cell.row, 3).value) + ' が' + str(dia) + ' diaで売れました。\n' + str(worksheet_list.cell(id_cell.row, 5).value) +'と取引を行って下さい。\n25人以上 / 分配 100dia以上なので盟主が分配します。以下に従って盟主と取引して下さい。\n尚、血盟資金 ' + str(math.floor(ketsushi)) + 'diaも含まれています。\n\n<@477504935727071232>さん： ' + str(math.floor(bun_cama)) + ' diaを受取り、以下の方に ' + str(math.floor(bunpc)) + ' diaを分配下さい。\n\n' + str(cama_list) + '\n<@363032621845839892>さん： ' + str(math.floor(bun_samurai)) + ' diaを受取り、以下の方に ' + str(math.floor(bunpc)) + ' diaを分配下さい。\n' + str(samurai_list) + '\n\n<@290377448711782400>さん： ' + str(math.floor(bun_death)) + ' diaを受取り、以下の方に ' + str(math.floor(bunpc)) + ' diaを分配下さい。\n ' + str(death_list))
+                            await culc_channel.send(str(rbun_id) + 'の' + str(worksheet_list.cell(id_cell.row, 2).value) + '/' + str(worksheet_list.cell(id_cell.row, 3).value) + ' が' + str(dia) + ' diaで売れました。\n' + str(worksheet_list.cell(id_cell.row, 5).value) +'と取引を行って下さい。\n25人以上 / 分配 100dia以上なので盟主が分配します。以下に従って盟主と取引して下さい。\n尚、血盟資金 ' + str(math.floor(ketsushi)) + 'diaも含まれています。\n\n<@477504935727071232>さん： ' + str(math.floor(bun_cama)) + ' diaを受取り、以下の方に ' + str(math.floor(bunpc)) + ' diaを分配下さい。\n' + str(cama_list) + '\n\n<@363032621845839892>さん： ' + str(math.floor(bun_samurai)) + ' diaを受取り、以下の方に ' + str(math.floor(bunpc)) + ' diaを分配下さい。\n' + str(samurai_list) + '\n\n<@290377448711782400>さん： ' + str(math.floor(bun_death)) + ' diaを受取り、以下の方に ' + str(math.floor(bunpc)) + ' diaを分配下さい。\n ' + str(death_list))
                             return
 
                     elif pp >= 25 and dia < 5000:
