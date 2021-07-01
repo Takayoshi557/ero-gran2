@@ -70,13 +70,12 @@ async def on_message(message):
 
     elif message.content.startswith('挨拶しなよえろぼっと'):
         await entry_channel.send('はじめまして。イベント採点に来ました。\n権限付与をお願いします。')
-
     elif message.content.startswith('タイム'):
         now = datetime.now(pytz.timezone('Asia/Tokyo'))
-        print(now)
+        #print(now)
     elif message.content.startswith('res '):
         if message.channel.id == 816666355004735518:
-        # if message.channel.id == 722253470023024640:
+            # if message.channel.id == 722253470023024640:
             worksheet_pt = gc.open_by_key(SPREADSHEET_KEY).worksheet('pt')
             today = datetime.now(pytz.timezone('Asia/Tokyo'))
             contents = message.content.split()
@@ -86,42 +85,46 @@ async def on_message(message):
             cell_end = worksheet_pt.find(str(day_end))
             print(str(cell_from.row))
             print(str(cell_end.col))
-            worksheet_pt.update_cell(6, 13, '=SUM(B' + str(cell_from.row) + ':B' + str(cell_end.row) + ')')
-            worksheet_pt.update_cell(6, 14, '=SUM(C' + str(cell_from.row) + ':C' + str(cell_end.row) + ')')
-            worksheet_pt.update_cell(6, 15, '=SUM(D' + str(cell_from.row) + ':D' + str(cell_end.row) + ')')
-            worksheet_pt.update_cell(6, 16, '=SUM(E' + str(cell_from.row) + ':E' + str(cell_end.row) + ')')
-            worksheet_pt.update_cell(6, 17, '=SUM(F' + str(cell_from.row) + ':F' + str(cell_end.row) + ')')
-            worksheet_pt.update_cell(6, 18, '=SUM(G' + str(cell_from.row) + ':G' + str(cell_end.row) + ')')
-            worksheet_pt.update_cell(6, 19, '=SUM(H' + str(cell_from.row) + ':H' + str(cell_end.row) + ')')
-            worksheet_pt.update_cell(6, 20, '=SUM(I' + str(cell_from.row) + ':I' + str(cell_end.row) + ')')
-            worksheet_pt.update_cell(6, 21, '=SUM(J' + str(cell_from.row) + ':J' + str(cell_end.row) + ')')
-            worksheet_pt.update_cell(6, 22, '=SUM(K' + str(cell_from.row) + ':K' + str(cell_end.row) + ')')
+            worksheet_pt.update_cell(6, 15, '=SUM(B' + str(cell_from.row) + ':B' + str(cell_end.row) + ')')
+            worksheet_pt.update_cell(6, 16, '=SUM(C' + str(cell_from.row) + ':C' + str(cell_end.row) + ')')
+            worksheet_pt.update_cell(6, 17, '=SUM(D' + str(cell_from.row) + ':D' + str(cell_end.row) + ')')
+            worksheet_pt.update_cell(6, 18, '=SUM(E' + str(cell_from.row) + ':E' + str(cell_end.row) + ')')
+            worksheet_pt.update_cell(6, 19, '=SUM(F' + str(cell_from.row) + ':F' + str(cell_end.row) + ')')
+            worksheet_pt.update_cell(6, 20, '=SUM(G' + str(cell_from.row) + ':G' + str(cell_end.row) + ')')
+            worksheet_pt.update_cell(6, 21, '=SUM(H' + str(cell_from.row) + ':H' + str(cell_end.row) + ')')
+            worksheet_pt.update_cell(6, 22, '=SUM(I' + str(cell_from.row) + ':I' + str(cell_end.row) + ')')
+            worksheet_pt.update_cell(6, 23, '=SUM(J' + str(cell_from.row) + ':J' + str(cell_end.row) + ')')
+            worksheet_pt.update_cell(6, 24, '=SUM(K' + str(cell_from.row) + ':K' + str(cell_end.row) + ')')
+            worksheet_pt.update_cell(6, 25, '=SUM(L' + str(cell_from.row) + ':L' + str(cell_end.row) + ')')
 
-            cama_rank = worksheet_pt.cell(7, 13).value
-            kimuchi_rank = worksheet_pt.cell(7, 14).value
-            ten_rank = worksheet_pt.cell(7, 15).value
-            lien_rank = worksheet_pt.cell(7, 16).value
-            dl_rank = worksheet_pt.cell(7, 17).value
-            pb_rank = worksheet_pt.cell(7, 18).value
-            samurai_rank = worksheet_pt.cell(7, 19).value
-            hiyoko_rank = worksheet_pt.cell(7, 20).value
-            death_rank = worksheet_pt.cell(7, 21).value
-            kgb_rank = worksheet_pt.cell(7, 22).value
-            
-            cama_total = worksheet_pt.cell(6, 13).value
-            kimuchi_total = worksheet_pt.cell(6, 14).value
-            ten_total = worksheet_pt.cell(6, 15).value
-            lien_total = worksheet_pt.cell(6, 16).value
-            dl_total = worksheet_pt.cell(6, 17).value
-            pb_total = worksheet_pt.cell(6, 18).value
-            samurai_total = worksheet_pt.cell(6, 19).value
-            hiyoko_total = worksheet_pt.cell(6, 20).value
-            death_total = worksheet_pt.cell(6, 21).value
-            kgb_total = worksheet_pt.cell(6, 22).value
-            
+            cama_rank = worksheet_pt.cell(7, 15).value
+            kimuchi_rank = worksheet_pt.cell(7, 16).value
+            ten_rank = worksheet_pt.cell(7, 17).value
+            lien_rank = worksheet_pt.cell(7, 18).value
+            dl_rank = worksheet_pt.cell(7, 19).value
+            pb_rank = worksheet_pt.cell(7, 20).value
+            samurai_rank = worksheet_pt.cell(7, 21).value
+            hiyoko_rank = worksheet_pt.cell(7, 22).value
+            death_rank = worksheet_pt.cell(7, 23).value
+            kgb_rank = worksheet_pt.cell(7, 24).value
+            offshore_rank = worksheet_pt.cell(7, 25).value
+
+            cama_total = worksheet_pt.cell(7, 15).value
+            kimuchi_total = worksheet_pt.cell(7, 16).value
+            ten_total = worksheet_pt.cell(7, 17).value
+            lien_total = worksheet_pt.cell(7, 18).value
+            dl_total = worksheet_pt.cell(7, 19).value
+            pb_total = worksheet_pt.cell(7, 20).value
+            samurai_total = worksheet_pt.cell(7, 21).value
+            hiyoko_total = worksheet_pt.cell(7, 22).value
+            death_total = worksheet_pt.cell(7, 23).value
+            kgb_total = worksheet_pt.cell(7, 24).value
+            offshore_total = worksheet_pt.cell(7, 25).value
+
+
             await pt_channel.send(str(day_from) + 'から' + str(day_end) + '間のPT数と順位を報告するね！')
-            
-            #1位判定
+
+            # 1位判定
             if int(cama_rank) == 1:
                 await pt_channel.send(str(cama_rank) + '位 / CAMARADE / ' + str(cama_total) + ' PT')
             if int(kimuchi_rank) == 1:
@@ -142,6 +145,9 @@ async def on_message(message):
                 await pt_channel.send(str(death_rank) + '位 / DEATH / ' + str(death_total) + ' PT')
             if int(kgb_rank) == 1:
                 await pt_channel.send(str(kgb_rank) + '位 / KGB / ' + str(kgb_total) + ' PT')
+            if int(offshore_rank) == 1:
+                await pt_channel.send(str(offshore_rank) + '位 / offshore / ' + str(offshore_total) + ' PT')
+
 
             # 2位判定
             if int(cama_rank) == 2:
@@ -164,6 +170,8 @@ async def on_message(message):
                 await pt_channel.send(str(death_rank) + '位 / DEATH / ' + str(death_total) + ' PT')
             if int(kgb_rank) == 2:
                 await pt_channel.send(str(kgb_rank) + '位 / KGB / ' + str(kgb_total) + ' PT')
+            if int(offshore_rank) == 2:
+                await pt_channel.send(str(offshore_rank) + '位 / offshore / ' + str(offshore_total) + ' PT')
 
             # 3位判定
             if int(cama_rank) == 3:
@@ -186,6 +194,10 @@ async def on_message(message):
                 await pt_channel.send(str(death_rank) + '位 / DEATH / ' + str(death_total) + ' PT')
             if int(kgb_rank) == 3:
                 await pt_channel.send(str(kgb_rank) + '位 / KGB / ' + str(kgb_total) + ' PT')
+            if int(offshore_rank) == 3:
+                await pt_channel.send(str(offshore_rank) + '位 / offshore / ' + str(offshore_total) + ' PT')
+
+
 
             # 4位判定
             if int(cama_rank) == 4:
@@ -208,6 +220,8 @@ async def on_message(message):
                 await pt_channel.send(str(death_rank) + '位 / DEATH / ' + str(death_total) + ' PT')
             if int(kgb_rank) == 4:
                 await pt_channel.send(str(kgb_rank) + '位 / KGB / ' + str(kgb_total) + ' PT')
+            if int(offshore_rank) == 4:
+                await pt_channel.send(str(offshore_rank) + '位 / offshore / ' + str(offshore_total) + ' PT')
 
             # 5位判定
             if int(cama_rank) == 5:
@@ -230,6 +244,8 @@ async def on_message(message):
                 await pt_channel.send(str(death_rank) + '位 / DEATH / ' + str(death_total) + ' PT')
             if int(kgb_rank) == 5:
                 await pt_channel.send(str(kgb_rank) + '位 / KGB / ' + str(kgb_total) + ' PT')
+            if int(offshore_rank) == 5:
+                await pt_channel.send(str(offshore_rank) + '位 / offshore / ' + str(offshore_total) + ' PT')
 
             # 6位判定
             if int(cama_rank) == 6:
@@ -252,6 +268,8 @@ async def on_message(message):
                 await pt_channel.send(str(death_rank) + '位 / DEATH / ' + str(death_total) + ' PT')
             if int(kgb_rank) == 6:
                 await pt_channel.send(str(kgb_rank) + '位 / KGB / ' + str(kgb_total) + ' PT')
+            if int(offshore_rank) == 6:
+                await pt_channel.send(str(offshore_rank) + '位 / offshore / ' + str(offshore_total) + ' PT')
 
             # 7位判定
             if int(cama_rank) == 7:
@@ -274,6 +292,8 @@ async def on_message(message):
                 await pt_channel.send(str(death_rank) + '位 / DEATH / ' + str(death_total) + ' PT')
             if int(kgb_rank) == 7:
                 await pt_channel.send(str(kgb_rank) + '位 / KGB / ' + str(kgb_total) + ' PT')
+            if int(offshore_rank) == 7:
+                await pt_channel.send(str(offshore_rank) + '位 / offshore / ' + str(offshore_total) + ' PT')
 
             # 8位判定
             if int(cama_rank) == 8:
@@ -296,6 +316,8 @@ async def on_message(message):
                 await pt_channel.send(str(death_rank) + '位 / DEATH / ' + str(death_total) + ' PT')
             if int(kgb_rank) == 8:
                 await pt_channel.send(str(kgb_rank) + '位 / KGB / ' + str(kgb_total) + ' PT')
+            if int(offshore_rank) == 8:
+                await pt_channel.send(str(offshore_rank) + '位 / offshore / ' + str(offshore_total) + ' PT')
 
             # 9位判定
             if int(cama_rank) == 9:
@@ -318,6 +340,8 @@ async def on_message(message):
                 await pt_channel.send(str(death_rank) + '位 / DEATH / ' + str(death_total) + ' PT')
             if int(kgb_rank) == 9:
                 await pt_channel.send(str(kgb_rank) + '位 / KGB / ' + str(kgb_total) + ' PT')
+            if int(offshore_rank) == 9:
+                await pt_channel.send(str(offshore_rank) + '位 / offshore / ' + str(offshore_total) + ' PT')
 
             # 10位判定
             if int(cama_rank) == 10:
@@ -340,16 +364,41 @@ async def on_message(message):
                 await pt_channel.send(str(death_rank) + '位 / DEATH / ' + str(death_total) + ' PT')
             if int(kgb_rank) == 10:
                 await pt_channel.send(str(kgb_rank) + '位 / KGB / ' + str(kgb_total) + ' PT')
+            if int(offshore_rank) == 10:
+                await pt_channel.send(str(offshore_rank) + '位 / offshore / ' + str(offshore_total) + ' PT')
+
+            # 11位判定
+            if int(cama_rank) == 11:
+                await pt_channel.send(str(cama_rank) + '位 / CAMARADE / ' + str(cama_total) + ' PT')
+            if int(kimuchi_rank) == 11:
+                await pt_channel.send(str(kimuchi_rank) + '位 / kimchi / ' + str(kimuchi_total) + ' PT')
+            if int(ten_rank) == 11:
+                await pt_channel.send(str(ten_rank) + '位 / 天 / ' + str(ten_total) + ' PT')
+            if int(lien_rank) == 11:
+                await pt_channel.send(str(lien_rank) + '位 / Lien / ' + str(lien_total) + ' PT')
+            if int(dl_rank) == 11:
+                await pt_channel.send(str(dl_rank) + '位 / DL / ' + str(dl_total) + ' PT')
+            if int(pb_rank) == 11:
+                await pt_channel.send(str(pb_rank) + '位 / PB / ' + str(pb_total) + ' PT')
+            if int(samurai_rank) == 11:
+                await pt_channel.send(str(samurai_rank) + '位 / SAMURAI / ' + str(samurai_total) + ' PT')
+            if int(hiyoko_rank) == 11:
+                await pt_channel.send(str(hiyoko_rank) + '位 / ひよこの復讐 / ' + str(hiyoko_total) + ' PT')
+            if int(death_rank) == 11:
+                await pt_channel.send(str(death_rank) + '位 / DEATH / ' + str(death_total) + ' PT')
+            if int(kgb_rank) == 11:
+                await pt_channel.send(str(kgb_rank) + '位 / KGB / ' + str(kgb_total) + ' PT')
+            if int(offshore_rank) == 11:
+                await pt_channel.send(str(offshore_rank) + '位 / offshore / ' + str(offshore_total) + ' PT')
+
 
             await pt_channel.send('これで結果発表を終わるよ！')
             return
 
 
-
-
     elif message.content.startswith('pt '):
         if message.channel.id == 816666355004735518:
-        # if message.channel.id == 722253470023024640:
+            # if message.channel.id == 722253470023024640:
             worksheet_pt = gc.open_by_key(SPREADSHEET_KEY).worksheet('pt')
             today = datetime.now(pytz.timezone('Asia/Tokyo'))
             day_count = worksheet_pt.cell(1, 1).value
@@ -381,11 +430,17 @@ async def on_message(message):
             elif str('kimuchi') in str(message.author.display_name):
                 worksheet_pt.update_cell(day_cell, 3, str(pt_num))
                 clan = str('kimuchi')
+            elif str('極-') in str(message.author.display_name):
+                worksheet_pt.update_cell(day_cell, 3, str(pt_num))
+                clan = str('kimuchi')
             elif message.author.id == 602177396053114881:
                 worksheet_pt.update_cell(day_cell, 3, str(pt_num))
                 clan = str('kimuchi')
 
             elif str('Lien-') in str(message.author.display_name):
+                worksheet_pt.update_cell(day_cell, 5, str(pt_num))
+                clan = str('Lien')
+            elif str('】Lien') in str(message.author.display_name):
                 worksheet_pt.update_cell(day_cell, 5, str(pt_num))
                 clan = str('Lien')
             elif str('Daylights') in str(message.author.display_name):
@@ -395,6 +450,9 @@ async def on_message(message):
                 worksheet_pt.update_cell(day_cell, 7, str(pt_num))
                 clan = str('PB')
             elif str('SAMURAI-') in str(message.author.display_name):
+                worksheet_pt.update_cell(day_cell, 8, str(pt_num))
+                clan = str('SAMURAI')
+            elif str('】SAMURAI') in str(message.author.display_name):
                 worksheet_pt.update_cell(day_cell, 8, str(pt_num))
                 clan = str('SAMURAI')
             elif str('ひよこの復讐') in str(message.author.display_name):
@@ -416,6 +474,9 @@ async def on_message(message):
             elif str('来生瞳') in str(message.author.display_name):
                 worksheet_pt.update_cell(day_cell, 11, str(pt_num))
                 clan = str('KGB')
+            elif str('offshore') in str(message.author.display_name):
+                worksheet_pt.update_cell(day_cell, 12, str(pt_num))
+                clan = str('offshore')
 
             else:
                 await pt_channel.send('名前から該当するクランが判定出来ませんでした！')
