@@ -97,29 +97,29 @@ async def on_message(message):
             worksheet_pt.update_cell(6, 24, '=SUM(K' + str(cell_from.row) + ':K' + str(cell_end.row) + ')')
             worksheet_pt.update_cell(6, 25, '=SUM(L' + str(cell_from.row) + ':L' + str(cell_end.row) + ')')
 
-            cama_rank = worksheet_pt.cell(6, 15).value
-            kimuchi_rank = worksheet_pt.cell(6, 16).value
-            ten_rank = worksheet_pt.cell(6, 17).value
-            lien_rank = worksheet_pt.cell(6, 18).value
-            dl_rank = worksheet_pt.cell(6, 19).value
-            pb_rank = worksheet_pt.cell(6, 20).value
-            samurai_rank = worksheet_pt.cell(6, 21).value
-            hiyoko_rank = worksheet_pt.cell(6, 22).value
-            death_rank = worksheet_pt.cell(6, 23).value
-            kgb_rank = worksheet_pt.cell(6, 24).value
-            offshore_rank = worksheet_pt.cell(6, 25).value
+            cama_rank = worksheet_pt.cell(7, 15).value
+            kimuchi_rank = worksheet_pt.cell(7, 16).value
+            ten_rank = worksheet_pt.cell(7, 17).value
+            lien_rank = worksheet_pt.cell(7, 18).value
+            dl_rank = worksheet_pt.cell(7, 19).value
+            pb_rank = worksheet_pt.cell(7, 20).value
+            samurai_rank = worksheet_pt.cell(7, 21).value
+            hiyoko_rank = worksheet_pt.cell(7, 22).value
+            death_rank = worksheet_pt.cell(7, 23).value
+            kgb_rank = worksheet_pt.cell(7, 24).value
+            offshore_rank = worksheet_pt.cell(7, 25).value
 
-            cama_total = worksheet_pt.cell(7, 15).value
-            kimuchi_total = worksheet_pt.cell(7, 16).value
-            ten_total = worksheet_pt.cell(7, 17).value
-            lien_total = worksheet_pt.cell(7, 18).value
-            dl_total = worksheet_pt.cell(7, 19).value
-            pb_total = worksheet_pt.cell(7, 20).value
-            samurai_total = worksheet_pt.cell(7, 21).value
-            hiyoko_total = worksheet_pt.cell(7, 22).value
-            death_total = worksheet_pt.cell(7, 23).value
-            kgb_total = worksheet_pt.cell(7, 24).value
-            offshore_total = worksheet_pt.cell(7, 25).value
+            cama_total = worksheet_pt.cell(6, 15).value
+            kimuchi_total = worksheet_pt.cell(6, 16).value
+            ten_total = worksheet_pt.cell(6, 17).value
+            lien_total = worksheet_pt.cell(6, 18).value
+            dl_total = worksheet_pt.cell(6, 19).value
+            pb_total = worksheet_pt.cell(6, 20).value
+            samurai_total = worksheet_pt.cell(6, 21).value
+            hiyoko_total = worksheet_pt.cell(6, 22).value
+            death_total = worksheet_pt.cell(6, 23).value
+            kgb_total = worksheet_pt.cell(6, 24).value
+            offshore_total = worksheet_pt.cell(6, 25).value
 
 
             await pt_channel.send(str(day_from) + 'から' + str(day_end) + '間のPT数と順位を報告するね！')
